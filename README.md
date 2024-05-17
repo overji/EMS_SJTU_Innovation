@@ -1,2 +1,2 @@
-# EMS-
+# EMS_SJTU_Innovation
 上海交通大学28期大学生创新实践项目用
