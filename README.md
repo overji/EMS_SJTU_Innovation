@@ -22,6 +22,11 @@
   - `solar.ui`
   - pictures: 存放图片
   - *此外还有一个`__init__.py`文件，用于标识该目录是一个包*
+- SignUp:
+  - `mainlog.py`：登录界面有关程序
+  - `denglu.py`,`zhuce.py`,`zhaohui.py`：登录，注册，找回密码界面
+  - `userdata.db`：用户数据
+  - `text.py`：运行以查询现有的用户数据
 
 ## 2. 界面概述
 - 打开`main.py`，进入登录界面`mainlog.py`
