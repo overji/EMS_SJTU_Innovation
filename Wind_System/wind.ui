@@ -1624,7 +1624,7 @@ color:white;
        <string notr="true">color:white</string>
       </property>
       <property name="text">
-       <string>                       电价             </string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

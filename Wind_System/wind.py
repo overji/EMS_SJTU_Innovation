@@ -16,18 +16,18 @@ class Wind_Ui():
         self.ui = uic.loadUi(self.path + "wind.ui")
         self.ui.setLayout(self.ui.verticalLayout)
         self.summon_pic1()
-        self.summon_pic2()
+        # self.summon_pic2()
 
     def wind_change_text(self):
         # 这里更新图像和label的数据
         self.summon_pic1()
-        self.summon_pic2()
+        # self.summon_pic2()
         picmap1 = QPixmap(self.path + "pictures/wind_pic1.jpg")
         self.ui.pic_1.setPixmap(picmap1)
         self.ui.pic_1.setScaledContents(True)
-        picmap2 = QPixmap(self.path + "pictures/wind_pic2.jpg")
-        self.ui.pic_2.setPixmap(picmap2)
-        self.ui.pic_2.setScaledContents(True)
+        # picmap2 = QPixmap(self.path + "pictures/wind_pic2.jpg")
+        # self.ui.pic_2.setPixmap(picmap2)
+        # self.ui.pic_2.setScaledContents(True)
         self.read_data_to_text()
         # self.old_wind_change_text()
 

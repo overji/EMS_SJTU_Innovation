@@ -17,12 +17,12 @@ class Solar_Ui():
         self.ui = uic.loadUi(self.path + "solar.ui")
         self.ui.setLayout(self.ui.verticalLayout)
         self.summon_pic1()
-        self.summon_pic2()
+        # self.summon_pic2()
 
     def photo_change_text(self):
         # 这里更新图像和label的数据
         self.summon_pic1()
-        self.summon_pic2()
+        # self.summon_pic2()
         picmap1 = QPixmap(self.path + "pictures/photo_pic1.jpg")
         self.ui.pic_1.setPixmap(picmap1)
         self.ui.pic_1.setScaledContents(True)
