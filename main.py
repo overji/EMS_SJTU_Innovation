@@ -1,24 +1,23 @@
 from mainui import *
-from mainlog import *
+from SignUp.mainlog import *
 from data_input import *
 
 if __name__ == '__main__':
-
-    #这里更新了数据库里面的数据
+    # 这里更新了数据库里面的数据
     update_data()
 
     app = QApplication(sys.argv)
 
-    main,wangjimima,register=log_init()
+    main, wangjimima, register = log_init("SignUp/")
     main.pushButton.clicked.connect(main.cutt)
     main.pushButton_2.clicked.connect(wangjimima.Open3)
     main.pushButton_3.clicked.connect(register.Open2)
     main.pushButton_4.clicked.connect(main.change2)
 
-
     main.pushButton_6.clicked.connect(main.change1)
 
     wangjimima.pushButton_2.clicked.connect(main.Open)
+    wangjimima.pushButton.clicked.connect(wangjimima.ct)
 
     register.pushButton.clicked.connect(register.cut)
     register.pushButton_2.clicked.connect(main.Open)
@@ -38,9 +37,3 @@ if __name__ == '__main__':
     main.getappfunc(w.show)
 
     sys.exit(app.exec_())
-
-
-
-
-
-
