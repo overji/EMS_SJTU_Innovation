@@ -14,7 +14,8 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
+</string>
   </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -29,7 +30,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="styleSheet">
-       <string notr="true">font: 48pt &quot;Microsoft YaHei&quot;;
+       <string notr="true">
 color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
@@ -68,7 +69,7 @@ color: rgb(255, 255, 255);</string>
             <item>
              <widget class="QLabel" name="label_2">
               <property name="styleSheet">
-               <string notr="true">font: 24pt &quot;Microsoft YaHei&quot;;
+               <string notr="true">
 
 color:white;
 </string>
@@ -91,11 +92,9 @@ color:white;
                 <item>
                  <widget class="QLabel" name="label_3">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
+                   <string notr="true">
 
-color:white;
-
-</string>
+color:white;</string>
                   </property>
                   <property name="text">
                    <string>电池组U</string>
@@ -105,7 +104,7 @@ color:white;
                 <item>
                  <widget class="QLabel" name="label_4">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
+                   <string notr="true">
 
 color:white;</string>
                   </property>
@@ -117,7 +116,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_5">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
+                   <string notr="true">
 
 color:white;</string>
                   </property>
@@ -129,7 +128,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_6">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
+                   <string notr="true">
 
 color:white;</string>
                   </property>
@@ -141,7 +140,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_7">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
+                   <string notr="true">
 
 color:white;</string>
                   </property>
@@ -153,7 +152,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_8">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
+                   <string notr="true">
 
 color:white;</string>
                   </property>
@@ -173,7 +172,6 @@ color:white;</string>
                  <widget class="QLabel" name="data1">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -192,7 +190,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data2">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -211,7 +208,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data3">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -230,7 +226,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data4">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -249,7 +244,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data5">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -268,7 +262,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data6">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -293,8 +286,7 @@ background-color:rgb(0, 0, 109);</string>
                 <item>
                  <widget class="QLabel" name="label_15">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -305,8 +297,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_16">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -317,8 +308,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_17">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -329,8 +319,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_18">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -341,8 +330,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_19">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -353,8 +341,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_20">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -386,9 +373,8 @@ color:white;</string>
             <item>
              <widget class="QLabel" name="label_21">
               <property name="styleSheet">
-               <string notr="true">font: 24pt &quot;Microsoft YaHei&quot;;
-color:white;
-</string>
+               <string notr="true">
+color:white;</string>
               </property>
               <property name="text">
                <string>电池组运行信息</string>
@@ -408,8 +394,7 @@ color:white;
                 <item>
                  <widget class="QLabel" name="label_22">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -420,8 +405,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_23">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -432,8 +416,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_24">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -444,8 +427,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_25">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -456,8 +438,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_26">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -468,8 +449,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_27">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -488,7 +468,6 @@ color:white;</string>
                  <widget class="QLabel" name="data7">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -507,7 +486,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data8">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -526,7 +504,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data9">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -545,7 +522,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data10">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -564,7 +540,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data11">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -583,7 +558,6 @@ background-color:rgb(0, 0, 109);</string>
                  <widget class="QLabel" name="data12">
                   <property name="styleSheet">
                    <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -608,8 +582,7 @@ background-color:rgb(0, 0, 109);</string>
                 <item>
                  <widget class="QLabel" name="label_34">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -620,8 +593,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_35">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -632,8 +604,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_36">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -644,8 +615,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_37">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -656,8 +626,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_38">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -668,8 +637,7 @@ color:white;</string>
                 <item>
                  <widget class="QLabel" name="label_39">
                   <property name="styleSheet">
-                   <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+                   <string notr="true">
 color:white;</string>
                   </property>
                   <property name="text">
@@ -703,9 +671,8 @@ color:white;</string>
           <item>
            <widget class="QLabel" name="label_11">
             <property name="styleSheet">
-             <string notr="true">font: 24pt &quot;Microsoft YaHei&quot;;
-color:white;
-</string>
+             <string notr="true">
+color:white;</string>
             </property>
             <property name="text">
              <string>功率预测曲线</string>
@@ -743,9 +710,8 @@ color:white;
       <item>
        <widget class="QLabel" name="label_40">
         <property name="styleSheet">
-         <string notr="true">font: 24pt &quot;Microsoft YaHei&quot;;
-color:white;
-</string>
+         <string notr="true">
+color:white;</string>
         </property>
         <property name="text">
          <string>电池组单体信息</string>
@@ -774,8 +740,7 @@ color:white;
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+             <string notr="true">
 color:white;</string>
             </property>
             <property name="text">
@@ -787,7 +752,7 @@ color:white;</string>
            <widget class="QLabel" name="data13">
             <property name="styleSheet">
              <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
+
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -812,8 +777,7 @@ background-color:rgb(0, 0, 109);</string>
           <item>
            <widget class="QLabel" name="label_42">
             <property name="styleSheet">
-             <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+             <string notr="true">
 color:white;</string>
             </property>
             <property name="text">
@@ -825,7 +789,7 @@ color:white;</string>
            <widget class="QLabel" name="data14">
             <property name="styleSheet">
              <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
+
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -850,8 +814,7 @@ background-color:rgb(0, 0, 109);</string>
           <item>
            <widget class="QLabel" name="label_43">
             <property name="styleSheet">
-             <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+             <string notr="true">
 color:white;</string>
             </property>
             <property name="text">
@@ -863,7 +826,7 @@ color:white;</string>
            <widget class="QLabel" name="data15">
             <property name="styleSheet">
              <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
+
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -888,8 +851,7 @@ background-color:rgb(0, 0, 109);</string>
           <item>
            <widget class="QLabel" name="label_44">
             <property name="styleSheet">
-             <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+             <string notr="true">
 color:white;</string>
             </property>
             <property name="text">
@@ -901,7 +863,7 @@ color:white;</string>
            <widget class="QLabel" name="data16">
             <property name="styleSheet">
              <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
+
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -926,8 +888,7 @@ background-color:rgb(0, 0, 109);</string>
           <item>
            <widget class="QLabel" name="label_45">
             <property name="styleSheet">
-             <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+             <string notr="true">
 color:white;</string>
             </property>
             <property name="text">
@@ -939,7 +900,7 @@ color:white;</string>
            <widget class="QLabel" name="data17">
             <property name="styleSheet">
              <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
+
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
@@ -964,8 +925,7 @@ background-color:rgb(0, 0, 109);</string>
           <item>
            <widget class="QLabel" name="label_46">
             <property name="styleSheet">
-             <string notr="true">font: 20pt &quot;Microsoft YaHei&quot;;
-
+             <string notr="true">
 color:white;</string>
             </property>
             <property name="text">
@@ -977,7 +937,7 @@ color:white;</string>
            <widget class="QLabel" name="data18">
             <property name="styleSheet">
              <string notr="true">
-font: 20pt  &quot;Microsoft YaHei&quot;;
+
 color: rgb(170, 255, 255);
 border-width:0.5px;
 border-style:solid;
