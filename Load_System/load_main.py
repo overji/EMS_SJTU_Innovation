@@ -16,16 +16,29 @@ import time
 import pandas as pd
 import sqlite3
 from matplotlib import pyplot as plt
+import ctypes
 
 
 class Load_Ui():
     path = None
 
-    def __init__(self, relative_path=None):
+    def __init__(self, relative_path=""):
         Load_Ui.path = relative_path
         self.ui = uic.loadUi(self.path + "load.ui")  # 加载ui文件
         self.ui.setLayout(self.ui.mainLayout)  # 设置界面主布局为主布局total_layout
         self.connect_button_func()  # 连接按钮信号与函数
+        self.setstylesheet()
+
+    def setstylesheet(self):
+        standard_font_size = 15
+        standard_dpi = 96 * 1.75
+        current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
+        font_size = standard_font_size * (current_dpi / standard_dpi)
+        stylesheet = f"""
+                font-size:{font_size}pt;
+                padding:10px;
+            """
+        self.ui.setStyleSheet(stylesheet)
 
     def Load_timerEvent(self):
         self.t = int(time.time() * 10) % 90
