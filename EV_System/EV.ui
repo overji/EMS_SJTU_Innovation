@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>849</width>
-    <height>540</height>
+    <width>1062</width>
+    <height>909</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,9 @@ radius:0.431, fx:0.5, fy:0.5,
 stop:0.153409 rgba(39, 98, 216, 255), 
 stop:1 rgba(16, 16, 181, 255)
 );
-padding:10px;</string>
+padding:10px;
+font: 20pt &quot;Microsoft YaHei&quot;;
+</string>
   </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -28,7 +30,7 @@ padding:10px;</string>
      <x>1</x>
      <y>0</y>
      <width>851</width>
-     <height>541</height>
+     <height>883</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="mainLayout" stretch="1,20">
@@ -40,7 +42,7 @@ padding:10px;</string>
       <property name="styleSheet">
        <string notr="true">background-color:rgba(0,0,0,0);
 color:white;
-font-size:20px;
+
 /*padding-left:40%;*/</string>
       </property>
       <property name="text">
@@ -63,7 +65,7 @@ font-size:20px;
           <property name="styleSheet">
            <string notr="true">background-color:rgba(0,0,0,0);
 color:white;
-font-size:15px;
+
 /*padding-left:40%;*/</string>
           </property>
           <property name="text">
@@ -318,7 +320,7 @@ color:white;
           <property name="styleSheet">
            <string notr="true">background-color:rgba(0,0,0,0);
 color:white;
-font-size:15px;
+
 /*padding-left:40%;*/</string>
           </property>
           <property name="text">
@@ -487,7 +489,7 @@ color:white;
           <property name="styleSheet">
            <string notr="true">background-color:rgba(0,0,0,0);
 color:white;
-font-size:15px;
+
 /*padding-left:40%;*/</string>
           </property>
           <property name="text">
@@ -503,7 +505,7 @@ font-size:15px;
           <property name="styleSheet">
            <string notr="true">background-color:rgba(0,0,0,0);
 color:white;
-font-size:15px;
+
 /*padding-left:40%;*/</string>
           </property>
           <property name="text">
@@ -523,7 +525,7 @@ font-size:15px;
            <widget class="QPushButton" name="set_btn_1">
             <property name="styleSheet">
              <string notr="true">color:white;
-font-size:15px;
+
 background-color:qradialgradient(
 spread:pad, cx:0.5, cy:0.5, 
 radius:0.431, fx:0.5, fy:0.5, 
@@ -541,7 +543,7 @@ stop:1 rgba(16, 16, 181, 255)
            <widget class="QPushButton" name="set_btn_2">
             <property name="styleSheet">
              <string notr="true">color:white;
-font-size:15px;
+
 background-color:qradialgradient(
 spread:pad, cx:0.5, cy:0.5, 
 radius:0.431, fx:0.5, fy:0.5, 
@@ -559,7 +561,7 @@ stop:1 rgba(16, 16, 181, 255)
            <widget class="QPushButton" name="set_btn_3">
             <property name="styleSheet">
              <string notr="true">color:white;
-font-size:15px;
+
 background-color:qradialgradient(
 spread:pad, cx:0.5, cy:0.5, 
 radius:0.431, fx:0.5, fy:0.5, 
