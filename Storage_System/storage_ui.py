@@ -11,7 +11,8 @@ import ctypes
 class Storage_Ui():
     path = None
     get_data = None
-    def __init__(self, relative_path=None,relative_data=None):
+
+    def __init__(self, relative_path=None, relative_data=None):
         Storage_Ui.path = relative_path
         self.get_data = relative_data
         self.ui = uic.loadUi(self.path + "storage.ui")
@@ -26,6 +27,7 @@ class Storage_Ui():
         current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
         font_size = standard_font_size * (current_dpi / standard_dpi)
         stylesheet = f"""
+                font-family:Microsoft YaHei;
                 font-size:{font_size}pt;
                 padding:10px;
             """
@@ -58,10 +60,11 @@ class Storage_Ui():
         spic2 = QPixmap(image)
         self.ui.PHOTO.setPixmap(spic2)
         self.ui.PHOTO.setScaledContents(True)
-        #self.read_data_to_text()
+        # self.read_data_to_text()
 
     def storage_change_text(self):
         self.storage_change_text_2()
+
     def pic2(self):
         fig, ax = plt.subplots(figsize=(5.0, 3.87))
         conn = sqlite3.connect("data/data_db.db")
@@ -73,6 +76,7 @@ class Storage_Ui():
         ax.bar([i for i in range(0, 24)], df["BatteryChange"][0:24])
         plt.savefig(self.path + "pictures/storage_pic2.jpg")
         plt.close()
+
     def pic1(self):
         fig, ax = plt.subplots(figsize=(4.80, 3.87))
         conn = sqlite3.connect("data/data_db.db")

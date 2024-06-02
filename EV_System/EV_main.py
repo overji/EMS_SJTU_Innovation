@@ -39,6 +39,7 @@ class EV_Ui():
         current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
         font_size = standard_font_size * (current_dpi / standard_dpi)
         stylesheet = f"""
+                font-family:Microsoft YaHei;
                 font-size:{font_size}pt;
                 padding:10px;
             """

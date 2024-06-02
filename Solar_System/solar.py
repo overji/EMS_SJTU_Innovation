@@ -21,14 +21,15 @@ class Solar_Ui():
         self.setstylesheet()
 
     def setstylesheet(self):
-        standard_font_size = 15
+        standard_font_size = 14
         standard_dpi = 96 * 1.75
         current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
         font_size = standard_font_size * (current_dpi / standard_dpi)
         stylesheet = f"""
-                    font-size:{font_size}pt;
-                    padding:10px;
-                """
+                font-family:Microsoft YaHei;
+                font-size:{font_size}pt;
+                padding:10px;
+            """
         self.ui.setStyleSheet(stylesheet)
 
     def photo_change_text(self):
