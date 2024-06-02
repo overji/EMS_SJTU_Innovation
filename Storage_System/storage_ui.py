@@ -5,6 +5,7 @@ from PyQt5 import uic
 import pandas as pd
 from matplotlib import pyplot as plt
 import sqlite3
+import ctypes
 
 
 class Storage_Ui():
@@ -17,6 +18,18 @@ class Storage_Ui():
         self.ui.setLayout(self.ui.layout1)
         self.list1 = [0 for i in range(60)]
         self.t = int(time.time() * 10) % 90
+        self.setstylesheet()
+
+    def setstylesheet(self):
+        standard_font_size = 15
+        standard_dpi = 96 * 1.75
+        current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
+        font_size = standard_font_size * (current_dpi / standard_dpi)
+        stylesheet = f"""
+                font-size:{font_size}pt;
+                padding:10px;
+            """
+        self.ui.setStyleSheet(stylesheet)
 
     def old_storage_change_text(self):
         for i in range(1, 19):
