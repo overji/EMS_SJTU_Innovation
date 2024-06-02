@@ -20,6 +20,7 @@ image_list = ["image1.jpg",
 
 # 分辨率参数 width,height,左侧宽度，右侧用于减去的宽度（左侧加30，也可以是20或50之类的）
 rr = [1440, 900, 150, 150 + 30]
+conti = True
 
 
 # //////////////////////
@@ -84,10 +85,15 @@ def exitwin():
 
 class MyWindow(QWidget):
     def __init__(self, parent=None):
+        self.timer = QTimer()
+        self.timer.timeout.connect(genetic_alg.run)
+        self.timer.start(60000)
         super().__init__(parent)
         self.create_stacked_layout()  # 多个页面只展示其中一个
         self.create_list_layout()  # 按钮用的
         self.init_ui()
+
+
 
     # 多页面的视图
     def create_stacked_layout(self):
@@ -195,6 +201,7 @@ class MyWindow(QWidget):
         exitbtn.setGeometry(rr[0] - int(rr[1] / 40), 0, int(rr[1] / 40), int(rr[1] / 40))
         exitbtn.setStyleSheet("font-size:10pt")
         exitbtn.clicked.connect(exitwin)
+        exitbtn.clicked.connect(lambda:self.timer.stop)
 
         # Minimized
         Miniwin_btn = QPushButton("-", self);
@@ -261,10 +268,7 @@ class MyWindow(QWidget):
         self.main_screen.setCurrentIndex(6)
 
 
-
-
 if __name__ == '__main__':
-    new_thread = threading.Thread(target=genetic_alg.data_processor)
     app = QApplication(sys.argv)
     rect = QDesktopWidget().availableGeometry().getRect()
     print(rect)
@@ -276,5 +280,4 @@ if __name__ == '__main__':
     # 创建自定义窗口
     w = MyWindow()
     w.show()
-    new_thread.start()
     app.exec_()
