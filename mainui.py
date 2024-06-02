@@ -13,6 +13,9 @@ from Solar_System.solar import *
 from EV_System.EV_main import *
 from Load_System.load_main import *
 from template_For_Data_Prediction import genetic_alg
+from Network_System.network import *
+
+
 # 仅供展示时显示界面范围
 image_list = ["image1.jpg",
               "image1.jpg", "image2.png", "image3.jpg", "image4.png",
@@ -95,7 +98,7 @@ class MyWindow(QWidget):
 
         # 页面Widget
         self.win1 = sample_screen("NONE", "gold", 1)
-        self.win2 = sample_screen("网络界面", "red", 2)
+        self.win2 = Network_Ui("Network_System/")
         self.win3 = Wind_Ui("Wind_System/")
         self.win4 = Solar_Ui("Solar_System/")
         self.win5 = EV_Ui("EV_System/")
@@ -106,7 +109,7 @@ class MyWindow(QWidget):
         #     eval("self.main_screen.addWidget(self.win%d.ui)"%i)
 
         self.main_screen.addWidget(self.win1)
-        self.main_screen.addWidget(self.win2)
+        self.main_screen.addWidget(self.win2.ui)
         self.main_screen.addWidget(self.win3.ui)
         self.main_screen.addWidget(self.win4.ui)
         self.main_screen.addWidget(self.win5.ui)
