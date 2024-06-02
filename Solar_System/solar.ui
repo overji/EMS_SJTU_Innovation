@@ -24,7 +24,7 @@ padding:10px;</string>
      <x>31</x>
      <y>39</y>
      <width>1041</width>
-     <height>1144</height>
+     <height>1220</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,17,1">
@@ -1648,7 +1648,7 @@ color:white;
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,1">
           <item>
-           <widget class="QLabel" name="label_4">
+           <widget class="QLabel" name="pic_1">
             <property name="text">
              <string/>
             </property>
