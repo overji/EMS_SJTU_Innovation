@@ -129,6 +129,7 @@ class EMS_data:
         return(mid.sum())
 
 def run(path=None):
+    print("data processing...")
     cross_rate = 0.6
     mutation_rate = 0.001
     MAXGEN = 50
@@ -151,6 +152,7 @@ def run(path=None):
 
 def database_input(arr:np.ndarray):
     # 连接到SQLite数据库
+    print("data processing...")
     conn = sqlite3.connect('data/data_db.db')
     c = conn.cursor()
     c.execute("PRAGMA table_info(dataTable)")
@@ -163,12 +165,6 @@ def database_input(arr:np.ndarray):
     conn.commit()
     conn.close()
     print("储能数据发送到数据库！")
-
-def data_processor():
-    while True:
-        print("data processing...")
-        run()
-        time.sleep(60)
 
 if  __name__ =="__main__":
     run()
