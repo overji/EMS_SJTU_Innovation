@@ -17,6 +17,7 @@ import time
 import pandas as pd
 import sqlite3
 from matplotlib import pyplot as plt
+import ctypes
 
 
 class EV_Ui():
@@ -30,6 +31,18 @@ class EV_Ui():
         self.ui.setLayout(self.ui.mainLayout)  # 设置界面主布局
         self.connect_button_func()  # 连接按钮信号与函数
         self.t = int(time.time() * 10) % 90
+        self.setstylesheet()
+
+    def setstylesheet(self):
+        standard_font_size = 15
+        standard_dpi = 96 * 1.75
+        current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
+        font_size = standard_font_size * (current_dpi / standard_dpi)
+        stylesheet = f"""
+                font-size:{font_size}pt;
+                padding:10px;
+            """
+        self.ui.setStyleSheet(stylesheet)
 
     # 定时触发事件
     def EV_timerEvent(self):
