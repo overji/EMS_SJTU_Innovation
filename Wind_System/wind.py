@@ -6,17 +6,30 @@ import time
 import pandas as pd
 import sqlite3
 from matplotlib import pyplot as plt
+import ctypes
 
 
 class Wind_Ui():
-    path = None
+    path = ""
 
-    def __init__(self, relative_path=None):
+    def __init__(self, relative_path=""):
         Wind_Ui.path = relative_path
         self.ui = uic.loadUi(self.path + "wind.ui")
         self.ui.setLayout(self.ui.verticalLayout)
         self.summon_pic1()
-        # self.summon_pic2()
+        # set style sheet
+        self.setstylesheet()
+
+    def setstylesheet(self):
+        standard_font_size = 15
+        standard_dpi = 96 * 1.75
+        current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
+        font_size = standard_font_size * (current_dpi / standard_dpi)
+        stylesheet = f"""
+                font-size:{font_size}pt;
+                padding:10px;
+            """
+        self.ui.setStyleSheet(stylesheet)
 
     def wind_change_text(self):
         # 这里更新图像和label的数据
