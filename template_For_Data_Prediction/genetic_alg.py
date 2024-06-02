@@ -1,10 +1,19 @@
+import sqlite3
+import time
 import numpy as np
 import pandas as pd
 
+raletive_paths= "template_For_Data_Prediction\\"
+def get_path(path):
+    global raletive_paths
+    raletive_paths = path
 
 class EMS_data:
-
-    def __init__(self, pop_size, chromosome_size):
+    path = None
+    def __init__(self, pop_size, chromosome_size,raletive_path=None):
+        global raletive_paths
+        #path = raletive_path
+        self.path = raletive_paths
         #初始化种群，需要输入种群大小pop_size和染色体大小chromosome_size
         self.pop_size = pop_size
         self.chromosome_size = chromosome_size
@@ -92,10 +101,11 @@ class EMS_data:
         # PV是光伏发电
         # WT是风力发电
         # price就是电价
-        self.Load = pd.read_csv("load.txt",delimiter = "\t",header = None)
-        self.PV = pd.read_csv("PV.txt",delimiter = "\t",header = None)
-        self.WT = pd.read_csv("WT.txt", delimiter="\t", header=None)
-        self.price = pd.read_csv("电价.txt", delimiter="\t", header=None)
+        print(self.path+"load.txt")
+        self.Load = pd.read_csv(self.path+"load.txt",delimiter = "\t",header = None)
+        self.PV = pd.read_csv(self.path+"PV.txt",delimiter = "\t",header = None)
+        self.WT = pd.read_csv(self.path+"WT.txt", delimiter="\t", header=None)
+        self.price = pd.read_csv(self.path+"电价.txt", delimiter="\t", header=None)
         self.grid_P = pd.Series([0.0]*24) #24小时电网交互功率
         self.grid_C = pd.Series([0.0]*24) #电网交互费用
         self.bat_E = pd.Series([0.0]*24) #蓄电池电量
@@ -118,13 +128,13 @@ class EMS_data:
             mid[i] = self.grid_C[i] + self.PV.iat[i,0]*0.0096 + self.WT.iat[i,0]*0.0296 + 10*abs(max(0,self.bat_E[i] - bat_Emax)) + 10*abs(min(0,self.bat_E[i] - bat_Emin))
         return(mid.sum())
 
-def run():
+def run(path=None):
     cross_rate = 0.6
     mutation_rate = 0.001
     MAXGEN = 50
     pop_size = 100
     chromosome_size = 24*14 #10位整数位 4位小数位
-    population = EMS_data(pop_size,chromosome_size)
+    population = EMS_data(pop_size,chromosome_size,path)
     for i in range(MAXGEN):
         population.cal_obj_value()
         population.select_chromosome()
@@ -133,11 +143,34 @@ def run():
         best_individual, best_fit = population.best()
         best_individual = np.expand_dims(best_individual, 0)
         x = population.binary2decimal(best_individual)
-        print(f"第{i}轮运算已经完成")
         if(i == MAXGEN-1):
-            print(f"运算完成，最终的结果是{x}，它的计算值是{population.function(x)}")
+            print(f"本轮运算完成，最终的结果是{x}，它的计算值是{population.function(x)}")
+            database_input(x)
             return x
+        time.sleep(0.1)
 
-run()
+def database_input(arr:np.ndarray):
+    # 连接到SQLite数据库
+    conn = sqlite3.connect('data/data_db.db')
+    c = conn.cursor()
+    c.execute("PRAGMA table_info(dataTable)")
+    columns = [column[1] for column in c.fetchall()]
+    if "BatteryChange" not in columns:
+        c.execute("ALTER TABLE dataTable ADD COLUMN BatteryChange REAL")
+    for i,value in enumerate(arr):
+        c.execute(f"UPDATE dataTable SET BatteryChange = {value} WHERE rowid = {i+1}")
+
+    conn.commit()
+    conn.close()
+    print("储能数据发送到数据库！")
+
+def data_processor():
+    while True:
+        print("data processing...")
+        run()
+        time.sleep(60)
+
+if  __name__ =="__main__":
+    run()
 
 

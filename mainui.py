@@ -1,5 +1,6 @@
 import sys
 import time
+import threading
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -11,7 +12,7 @@ from Wind_System.wind import *
 from Solar_System.solar import *
 from EV_System.EV_main import *
 from Load_System.load_main import *
-
+from template_For_Data_Prediction import genetic_alg
 # 仅供展示时显示界面范围
 image_list = ["image1.jpg",
               "image1.jpg", "image2.png", "image3.jpg", "image4.png",
@@ -98,7 +99,7 @@ class MyWindow(QWidget):
         self.win3 = Wind_Ui("Wind_System/")
         self.win4 = Solar_Ui("Solar_System/")
         self.win5 = EV_Ui("EV_System/")
-        self.win6 = Storage_Ui("Storage_System/")
+        self.win6 = Storage_Ui("Storage_System/",genetic_alg.run)
         self.win7 = Load_Ui("Load_System/")
 
         # for i in range (1,8):
@@ -260,10 +261,14 @@ class MyWindow(QWidget):
         self.main_screen.setCurrentIndex(6)
 
 
+
+
 if __name__ == '__main__':
+    new_thread = threading.Thread(target=genetic_alg.data_processor)
     app = QApplication(sys.argv)
     rect = QDesktopWidget().availableGeometry().getRect()
     print(rect)
+    genetic_alg.get_path("template_For_Data_Prediction/")
     rr[0] = rect[2]
     rr[1] = rect[3]
     rr[2] = int(rr[0] / 10)
@@ -271,4 +276,5 @@ if __name__ == '__main__':
     # 创建自定义窗口
     w = MyWindow()
     w.show()
+    new_thread.start()
     app.exec_()

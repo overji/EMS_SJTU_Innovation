@@ -9,9 +9,10 @@ import sqlite3
 
 class Storage_Ui():
     path = None
-
-    def __init__(self, relative_path=None):
+    get_data = None
+    def __init__(self, relative_path=None,relative_data=None):
         Storage_Ui.path = relative_path
+        self.get_data = relative_data
         self.ui = uic.loadUi(self.path + "storage.ui")
         self.ui.setLayout(self.ui.layout1)
         self.list1 = [0 for i in range(60)]
@@ -27,7 +28,7 @@ class Storage_Ui():
 
             # print(i)
 
-    def storage_change_text(self):
+    def storage_change_text_1(self):
         self.t = int(time.time() * 10) % 90
         self.pic1()
         image = QImage(self.path + "pictures/storage_pic1.jpg")
@@ -37,6 +38,28 @@ class Storage_Ui():
         self.ui.PHOTO.setScaledContents(True)
         self.read_data_to_text()
 
+    def storage_change_text_2(self):
+        self.pic2()
+        image = QImage(self.path + "pictures/storage_pic2.jpg")
+        image.scaled(self.ui.PHOTO.size())
+        spic2 = QPixmap(image)
+        self.ui.PHOTO.setPixmap(spic2)
+        self.ui.PHOTO.setScaledContents(True)
+        #self.read_data_to_text()
+
+    def storage_change_text(self):
+        self.storage_change_text_2()
+    def pic2(self):
+        fig, ax = plt.subplots(figsize=(5.0, 3.87))
+        conn = sqlite3.connect("data/data_db.db")
+        query = "SELECT BatteryChange FROM dataTable"
+        df = pd.read_sql_query(query, conn)
+        ax.set_xlabel("time(h)")
+        ax.set_ylabel("Storage Energy(kW)")
+        ax.set_title("Storage_system")
+        ax.bar([i for i in range(0, 24)], df["BatteryChange"][0:24])
+        plt.savefig(self.path + "pictures/storage_pic2.jpg")
+        plt.close()
     def pic1(self):
         fig, ax = plt.subplots(figsize=(4.80, 3.87))
         conn = sqlite3.connect("data/data_db.db")
