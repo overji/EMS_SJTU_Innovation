@@ -12,9 +12,6 @@ if __name__ == '__main__':
     main.pushButton.clicked.connect(main.cutt)
     main.pushButton_2.clicked.connect(wangjimima.Open3)
     main.pushButton_3.clicked.connect(register.Open2)
-    main.pushButton_4.clicked.connect(main.change2)
-
-    main.pushButton_6.clicked.connect(main.change1)
 
     wangjimima.pushButton_2.clicked.connect(main.Open)
     wangjimima.pushButton.clicked.connect(wangjimima.ct)
@@ -23,7 +20,6 @@ if __name__ == '__main__':
     register.pushButton_2.clicked.connect(main.Open)
 
     main.show()
-    main.pushButton_4.close()
 
     rect = QDesktopWidget().availableGeometry().getRect()
     print(rect)
