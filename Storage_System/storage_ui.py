@@ -18,7 +18,8 @@ class Storage_Ui():
         self.list1 = [0 for i in range(60)]
         self.t = int(time.time() * 10) % 90
         self.setstylesheet()
-
+        self.ui.pushButton.setStyleSheet("border-image:url(./pictures/white.png);color: rgb(255, 255, 255);")
+        self.ui.pushButton.clicked.connect(self.btnclick1)
     def old_storage_change_text(self):
         for i in range(1, 19):
             # self.win6.data1.setText("11111")
@@ -106,3 +107,12 @@ class Storage_Ui():
         for i in range(1, 19):
             if i == 3 or i == 2: continue
             eval("self.ui.data%d.setText(\"%.2f\")" % (i, data_column[i]))
+
+    def btnclick1(self):
+        self.ui.pushButton.clicked.connect(self.btnclick2)
+        self.ui.pushButton.clicked.disconnect(self.btnclick1)
+        self.storage_change_text_2()
+    def btnclick2(self):
+        self.ui.pushButton.clicked.connect(self.btnclick1)
+        self.ui.pushButton.clicked.disconnect(self.btnclick2)
+        self.storage_change_text_1()
