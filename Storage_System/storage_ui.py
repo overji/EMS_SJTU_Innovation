@@ -5,33 +5,17 @@ from PyQt5 import uic
 import pandas as pd
 from matplotlib import pyplot as plt
 import sqlite3
-import ctypes
-
 
 class Storage_Ui():
     path = None
     get_data = None
-
-    def __init__(self, relative_path=None, relative_data=None):
+    def __init__(self, relative_path=None,relative_data=None):
         Storage_Ui.path = relative_path
         self.get_data = relative_data
         self.ui = uic.loadUi(self.path + "storage.ui")
         self.ui.setLayout(self.ui.layout1)
         self.list1 = [0 for i in range(60)]
         self.t = int(time.time() * 10) % 90
-        self.setstylesheet()
-
-    def setstylesheet(self):
-        standard_font_size = 15
-        standard_dpi = 96 * 1.75
-        current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
-        font_size = standard_font_size * (current_dpi / standard_dpi)
-        stylesheet = f"""
-                font-family:Microsoft YaHei;
-                font-size:{font_size}pt;
-                padding:10px;
-            """
-        self.ui.setStyleSheet(stylesheet)
 
     def old_storage_change_text(self):
         for i in range(1, 19):
@@ -55,12 +39,13 @@ class Storage_Ui():
 
     def storage_change_text_2(self):
         self.pic2()
+        self.pic1()
         image = QImage(self.path + "pictures/storage_pic2.jpg")
         image.scaled(self.ui.PHOTO.size())
         spic2 = QPixmap(image)
         self.ui.PHOTO.setPixmap(spic2)
         self.ui.PHOTO.setScaledContents(True)
-        # self.read_data_to_text()
+        #self.read_data_to_text()
 
     def storage_change_text(self):
         self.storage_change_text_2()
@@ -68,33 +53,28 @@ class Storage_Ui():
     def pic2(self):
         fig, ax = plt.subplots(figsize=(5.0, 3.87))
         conn = sqlite3.connect("data/data_db.db")
-        query = "SELECT BatteryChange FROM dataTable"
+        query = "SELECT BatteryChange FROM dataTable"  # 假设汽车的调度数据在CarChange列
         df = pd.read_sql_query(query, conn)
         ax.set_xlabel("time(h)")
-        ax.set_ylabel("Storage Energy(kW)")
+        ax.set_ylabel("Energy(kW)")
         ax.set_title("Storage_system")
-        ax.bar([i for i in range(0, 24)], df["BatteryChange"][0:24])
+        ax.bar([i for i in range(0, 24)], df["BatteryChange"][0:24], color='g', label='Battery')  # 电池的调度数据用蓝色表示
+        ax.legend()  # 显示图例
         plt.savefig(self.path + "pictures/storage_pic2.jpg")
         plt.close()
 
     def pic1(self):
-        fig, ax = plt.subplots(figsize=(4.80, 3.87))
+        fig, ax = plt.subplots(figsize=(5.0, 3.87))
         conn = sqlite3.connect("data/data_db.db")
-        query = "SELECT * FROM dataTable"
+        query = "SELECT x_values FROM dataTable"
         df = pd.read_sql_query(query, conn)
-        a = min(max(self.t, 15), 45) - 15
-        # print(df)
-        ax.set_xlabel("t(s)")
-        ax.set_ylabel("Power(kW)")
-        ax.set_title("Storage_system")
-        plt.ylim(-15, 15)
-        for i in range(60):
-            self.list1[i] = 0
-            self.list1[i] -= df["loadkW"][i + a] / 20
-            self.list1[i] += df["windkW"][i + a] / 20
-            self.list1[i] += df["photokW"][i + a] / 20
-        ax.plot([i for i in range(a, a + 60)], self.list1)
-        ax.plot([self.t], [self.list1[self.t - a]], color="red", marker="o")
+        ax.set_xlabel("times")
+        ax.set_ylabel("Total cost ratio")
+        ax.set_title("Fit value")
+        size = (df["x_values"].shape)[0]
+        print(df["x_values"])
+        ax.plot([i for i in range(0, size)],
+                (df["x_values"] - df["x_values"].min()) / (df["x_values"].max() - df["x_values"].min()))
         plt.savefig(self.path + "pictures/storage_pic1.jpg")
         plt.close()
 
