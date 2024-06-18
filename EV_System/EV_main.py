@@ -17,7 +17,6 @@ import time
 import pandas as pd
 import sqlite3
 from matplotlib import pyplot as plt
-import ctypes
 
 
 class EV_Ui():
@@ -31,19 +30,6 @@ class EV_Ui():
         self.ui.setLayout(self.ui.mainLayout)  # 设置界面主布局
         self.connect_button_func()  # 连接按钮信号与函数
         self.t = int(time.time() * 10) % 90
-        self.setstylesheet()
-
-    def setstylesheet(self):
-        standard_font_size = 15
-        standard_dpi = 96 * 1.75
-        current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
-        font_size = standard_font_size * (current_dpi / standard_dpi)
-        stylesheet = f"""
-                font-family:Microsoft YaHei;
-                font-size:{font_size}pt;
-                padding:10px;
-            """
-        self.ui.setStyleSheet(stylesheet)
 
     # 定时触发事件
     def EV_timerEvent(self):
@@ -80,17 +66,15 @@ class EV_Ui():
     # 更新曲线图
     def EV_graph_update(self):
         """更新曲线图"""
-        fig, ax = plt.subplots(figsize=(6.28, 5.52))
+        fig, ax = plt.subplots(figsize=(5.0, 3.87))
         conn = sqlite3.connect("data/data_db.db")
-        query = "SELECT * FROM dataTable"
+        query = "SELECT BatteryChange FROM dataTable"  # 假设汽车的调度数据在CarChange列
         df = pd.read_sql_query(query, conn)
-        ax.set_xlabel("t(s)")
-        ax.set_ylabel("Power(kw)")
-        ax.set_title("EV Power")
-        a = min(max(self.t, 15), 45) - 15
-        ax.plot(df["photokW"][0 + a:60 + a])
-        tmp = df["photokW"]
-        ax.plot([self.t], tmp[self.t], color="red", marker="o")
+        ax.set_xlabel("time(h)")
+        ax.set_ylabel("Energy(kW)")
+        ax.set_title("Storage_system")
+        ax.bar([i for i in range(0, 24)], df["BatteryChange"][24:48], color='r', label='Car')
+        ax.legend()  # 显示图例
         plt.savefig(self.path + "EV_pictures/photokW.jpg")
         plt.close()
         # 以上绘制图片并保存，以下更新界面
