@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\360安全浏览器下载\EMS_SJTU_Innovation-main\SignUp\zhuce.ui'
+# Form implementation generated from reading ui file 'zhuce.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -9,15 +9,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from . import bg
 
 
 class Ui_MainWindow3(object):
-    def setupUi(self, MainWindow3):
-        MainWindow3.setObjectName("MainWindow3")
-        MainWindow3.setWindowModality(QtCore.Qt.WindowModal)
-        MainWindow3.resize(800, 667)
-        MainWindow3.setStyleSheet("background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.431, fx:0.5, fy:0.5, stop:0.153409 rgba(39, 98, 216, 255), stop:1 rgba(16, 16, 181, 255));\\npadding:10px;")
-        self.centralwidget = QtWidgets.QWidget(MainWindow3)
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.setWindowModality(QtCore.Qt.WindowModal)
+        MainWindow.resize(790, 652)
+        MainWindow.setStyleSheet(
+            "background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.431, fx:0.5, fy:0.5, stop:0.153409 rgba(39, 98, 216, 255), stop:1 rgba(16, 16, 181, 255));\\npadding:10px;")
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
@@ -27,7 +29,7 @@ class Ui_MainWindow3(object):
         font.setPointSize(20)
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color:rgba(0,0,0,0);")
+                                   "background-color:rgba(0,0,0,0);")
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 5, 4, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(159, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -44,7 +46,7 @@ class Ui_MainWindow3(object):
         font.setPointSize(20)
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color:rgba(0,0,0,0);")
+                                      "background-color:rgba(0,0,0,0);")
         self.pushButton.setObjectName("pushButton")
         self.gridLayout.addWidget(self.pushButton, 9, 5, 1, 1)
         spacerItem4 = QtWidgets.QSpacerItem(20, 63, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -55,7 +57,7 @@ class Ui_MainWindow3(object):
         font.setPointSize(20)
         self.label.setFont(font)
         self.label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color:rgba(0,0,0,0);")
+                                 "background-color:rgba(0,0,0,0);")
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 1, 4, 1, 1)
         spacerItem5 = QtWidgets.QSpacerItem(20, 62, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -113,7 +115,7 @@ class Ui_MainWindow3(object):
         font.setPointSize(20)
         self.label_4.setFont(font)
         self.label_4.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color:rgba(0,0,0,0);")
+                                   "background-color:rgba(0,0,0,0);")
         self.label_4.setObjectName("label_4")
         self.gridLayout.addWidget(self.label_4, 3, 4, 1, 1)
         spacerItem14 = QtWidgets.QSpacerItem(20, 63, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -159,7 +161,7 @@ class Ui_MainWindow3(object):
         font.setPointSize(20)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color:rgba(0,0,0,0);")
+                                        "background-color:rgba(0,0,0,0);")
         self.pushButton_2.setObjectName("pushButton_2")
         self.gridLayout.addWidget(self.pushButton_2, 0, 0, 1, 1)
         spacerItem18 = QtWidgets.QSpacerItem(18, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -172,25 +174,25 @@ class Ui_MainWindow3(object):
         font.setPointSize(20)
         self.label_3.setFont(font)
         self.label_3.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color:rgba(0,0,0,0);")
+                                   "background-color:rgba(0,0,0,0);")
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 7, 4, 1, 1)
         spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem20, 0, 6, 1, 1)
-        MainWindow3.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow3)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow3.setStatusBar(self.statusbar)
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow3)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow3)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow3):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow3.setWindowTitle(_translate("MainWindow3", "注册界面"))
-        self.label_2.setText(_translate("MainWindow3", "密 码  ："))
-        self.pushButton.setText(_translate("MainWindow3", "注册"))
-        self.label.setText(_translate("MainWindow3", "用户名 ："))
-        self.label_4.setText(_translate("MainWindow3", "手机号 ："))
-        self.pushButton_2.setText(_translate("MainWindow3", "返回"))
-        self.label_3.setText(_translate("MainWindow3", "确认密码："))
+        MainWindow.setWindowTitle(_translate("MainWindow", "注册界面"))
+        self.label_2.setText(_translate("MainWindow", "密 码  ："))
+        self.pushButton.setText(_translate("MainWindow", "注册"))
+        self.label.setText(_translate("MainWindow", "用户名 ："))
+        self.label_4.setText(_translate("MainWindow", "手机号 ："))
+        self.pushButton_2.setText(_translate("MainWindow", "返回"))
+        self.label_3.setText(_translate("MainWindow", "确认密码："))

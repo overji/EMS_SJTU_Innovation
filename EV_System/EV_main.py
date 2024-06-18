@@ -16,6 +16,7 @@ from PyQt5 import uic
 import time
 import pandas as pd
 import sqlite3
+import ctypes
 from matplotlib import pyplot as plt
 
 
@@ -30,6 +31,7 @@ class EV_Ui():
         self.ui.setLayout(self.ui.mainLayout)  # 设置界面主布局
         self.connect_button_func()  # 连接按钮信号与函数
         self.t = int(time.time() * 10) % 90
+        self.setstylesheet()
 
     # 定时触发事件
     def EV_timerEvent(self):
@@ -38,6 +40,17 @@ class EV_Ui():
         self.EV_graph_update()
         self.t = int(time.time() * 10) % 90
 
+    def setstylesheet(self):
+        standard_font_size = 15
+        standard_dpi = 96 * 1.75
+        current_dpi = ctypes.windll.user32.GetDpiForWindow(ctypes.windll.user32.GetDesktopWindow())
+        font_size = standard_font_size * (current_dpi / standard_dpi)
+        stylesheet = f"""
+                font-family:Microsoft YaHei;
+                font-size:{font_size}pt;
+                padding:10px;
+            """
+        self.ui.setStyleSheet(stylesheet)
     # 更新数据显示
     def EV_data_update(self):
         """更新数据显示"""

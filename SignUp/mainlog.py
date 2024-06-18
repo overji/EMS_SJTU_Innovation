@@ -33,6 +33,15 @@ class MainWindow(QMainWindow, Ui_MainWindow1):
         register.lineEdit_3.clear()
         register.lineEdit_4.clear()
 
+    def change1(self):
+        self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Normal)
+        self.pushButton_4.show()
+        self.pushButton_6.close()
+
+    def change2(self):
+        self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.pushButton_6.show()
+        self.pushButton_4.close()
 
     def cutt(self):
         user_id = self.lineEdit_3.text()  # 获取账号
@@ -206,6 +215,8 @@ if __name__ == '__main__':
     main.pushButton.clicked.connect(main.cutt)
     main.pushButton_2.clicked.connect(wangjimima.Open3)
     main.pushButton_3.clicked.connect(register.Open2)
+    main.pushButton_4.clicked.connect(main.change2)
+    main.pushButton_6.clicked.connect(main.change1)
 
     wangjimima.pushButton_2.clicked.connect(main.Open)
     wangjimima.pushButton.clicked.connect(wangjimima.ct)
@@ -214,5 +225,5 @@ if __name__ == '__main__':
     register.pushButton_2.clicked.connect(main.Open)
 
     main.show()
-
+    main.pushButton_4.close()
     sys.exit(app.exec_())
