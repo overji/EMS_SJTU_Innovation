@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>MainWindow3</class>
+ <widget class="QMainWindow" name="MainWindow3">
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
@@ -492,8 +492,6 @@ background-color:rgba(0,0,0,0);</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="bg.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
