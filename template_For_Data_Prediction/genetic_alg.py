@@ -2,6 +2,7 @@ import sqlite3
 import time
 import numpy as np
 import pandas as pd
+import matplotlib as plt
 
 raletive_paths= "template_For_Data_Prediction\\"
 def get_path(path):
@@ -59,8 +60,8 @@ class EMS_data:
         best_individual = self.population[0, :]
         best_fit = self.fit_value[0]
         for i in range(1, self.pop_size):
-            #现在是个体fit_value越大越容易被选择
-            if self.fit_value[i] > best_fit:
+            #现在是个体fit_value越小容易被选择
+            if self.fit_value[i] < best_fit:
                 best_individual = self.population[i, :]
                 best_fit = self.fit_value[i]
         return best_individual, best_fit
@@ -82,11 +83,17 @@ class EMS_data:
             population = population[0]
         y = self.chromosome_size
         ans = np.zeros(y//14)
+        #计算每一个对应的fit_value值
         for k in range(0,y//14):
             mid = 0
             for i in range(0,14):
                 mid += 2 ** (9-i) * population[k*14+i]
             ans[k] = mid
+            #归一化
+            if(k <=23):
+                ans[k] = (mid/512)*100 - 50
+            else:
+                ans[k] = (mid/1024)*50
         return ans
 
     def cal_obj_value(self):
@@ -109,68 +116,87 @@ class EMS_data:
         self.grid_P = pd.Series([0.0]*24) #24小时电网交互功率
         self.grid_C = pd.Series([0.0]*24) #电网交互费用
         self.bat_E = pd.Series([0.0]*24) #蓄电池电量
-        self.remain = self.Load - self.PV - self.WT
+        self.car_E = pd.Series([0.0]*24) #汽车用电量
+        self.remain = -self.Load + self.PV + self.WT
 
 
     def function(self,X):
         #计算，返回值是消耗的电价
+        #约束条件是
+        # 风能发电PV，光伏发电WT，用电载荷Load，储能模块充电/放电bat_E，电动汽车用电car_E，电网输出/流入电量grid_P
+        #PV + WT + bat_E + grid_P = Load + car_E
         bat_Emax = 551.8 #蓄电池最大电量
         bat_Emin = 0.4 * bat_Emax #要求蓄电池最少要有40%的电量储备
         bat_E0 = 0.8 * bat_Emax #假定初始时有80%的电量
-        mid = pd.Series([0.0]*24)
+        car_Emax = 500 #电车最大充电量
+        car_Emin = 0 #电车供电不能为负
+        car_E0 = car_Emax * 0.25 #电车初始电量
+        total_cost = pd.Series([0.0]*24)
         for i in range(0,24):
             if(i == 0):
-                self.bat_E[1] = bat_E0 *(1-0.0001) + X[1]*0.9
+                self.bat_E[1] = bat_E0 *(1-0.0001) + X[1]*0.9 #储能功率
+                self.car_E[1] = car_E0 *(1-0.0002) + X[24]*0.9
             else:
                 self.bat_E[i] = self.bat_E[i-1]*(1-0.0001)+X[i]*0.9
-            self.grid_P[i]= self.remain.iat[i,0] - X[i]
-            self.grid_C[i] = self.price.iat[i,0] * self.grid_P[i]
-            mid[i] = self.grid_C[i] + self.PV.iat[i,0]*0.0096 + self.WT.iat[i,0]*0.0296 + 10*abs(max(0,self.bat_E[i] - bat_Emax)) + 10*abs(min(0,self.bat_E[i] - bat_Emin))
-        return(mid.sum())
+                self.car_E[i] = self.car_E[i-1]*(1-0.0002) + X[i+24]*0.9
+            self.grid_P[i]= self.remain.iat[i,0] - X[i] - X[i+24]# 交互功率
+            self.grid_C[i] = self.price.iat[i,0] * self.grid_P[i]# 购电成本
+            #总共的消耗 = 电网购电成本/售电收入 - 风力发电收入 -汽车充电收入 - 光伏发电收入 + 储能超标惩罚 + 汽车用电超标惩罚
+            total_cost[i] = (self.grid_C[i] - self.PV.iat[i,0]*0.0096 - self.car_E[i]*0.02 -
+                      self.WT.iat[i,0]*0.0296 + 10000*abs(max(0,self.bat_E[i] - bat_Emax)) + 1000*abs(min(0,self.bat_E[i] - bat_Emin)) + 10000*abs(max(0,self.car_E[i] - car_Emax)) + 1000*abs(min(0,self.car_E[i] - car_Emin)))
+        return(total_cost.sum())
 
-def run(path=None):
-    cross_rate = 0.6
+def GA_run_func(path=None):
+    print("data processing...")
+    cross_rate = 0.8
     mutation_rate = 0.001
-    MAXGEN = 50
+    MAXGEN =75
     pop_size = 100
-    chromosome_size = 24*14 #10位整数位 4位小数位
+    chromosome_size = 48*14 #10位整数位 4位小数位
     population = EMS_data(pop_size,chromosome_size,path)
+    x_array:np.ndarray = np.zeros(MAXGEN)
+    ever_best_individiual, ever_best_fit = population.best()
+
     for i in range(MAXGEN):
         population.cal_obj_value()
         population.select_chromosome()
         population.cross_chromosome(cross_rate)
         population.mutation_chromosome(mutation_rate)
         best_individual, best_fit = population.best()
+        if (i == 1):
+            ever_best_individiual, ever_best_fit = population.best()
+        else:
+            if(ever_best_fit > best_fit):
+                ever_best_individiual, ever_best_fit = best_individual, best_fit
         best_individual = np.expand_dims(best_individual, 0)
         x = population.binary2decimal(best_individual)
+        x_array[i] = population.function(x)
+        print(f"现在的大小是{x_array[i]}")
         if(i == MAXGEN-1):
-            print(f"本轮运算完成，最终的结果是{x}，它的计算值是{population.function(x)}")
-            database_input(x)
-            return x
-        time.sleep(0.1)
+            final = population.binary2decimal(ever_best_individiual)
+            print(f"本轮运算完成，最终的结果是{final}，它的计算值是{population.function(final)}")
+            database_input(final,"BatteryChange")
+            database_input(x_array, "x_values")
+            return final
+        time.sleep(1)
 
-def database_input(arr:np.ndarray):
-    # 连接到SQLite数据库
+
+def database_input(arr:np.ndarray, str):
+    print("data processing...")
     conn = sqlite3.connect('data/data_db.db')
     c = conn.cursor()
     c.execute("PRAGMA table_info(dataTable)")
     columns = [column[1] for column in c.fetchall()]
-    if "BatteryChange" not in columns:
-        c.execute("ALTER TABLE dataTable ADD COLUMN BatteryChange REAL")
-    for i,value in enumerate(arr):
-        c.execute(f"UPDATE dataTable SET BatteryChange = {value} WHERE rowid = {i+1}")
-
+    if str not in columns:
+        c.execute(f"ALTER TABLE dataTable ADD COLUMN {str} REAL")
+    for i, value in enumerate(arr):
+        c.execute(f"UPDATE dataTable SET {str} = {value} WHERE rowid = {i+1}")
     conn.commit()
     conn.close()
     print("储能数据发送到数据库！")
 
-def data_processor():
-    while True:
-        print("data processing...")
-        run()
-        time.sleep(60)
 
 if  __name__ =="__main__":
-    run()
+    GA_run_func()
 
 
