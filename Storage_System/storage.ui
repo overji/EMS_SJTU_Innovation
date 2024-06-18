@@ -669,16 +669,13 @@ color:white;</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_11">
+           <widget class="QPushButton" name="pushButton">
             <property name="styleSheet">
-             <string notr="true">
-color:white;</string>
+             <string notr="true">color: rgb(255, 255, 255);
+</string>
             </property>
             <property name="text">
              <string>功率预测曲线</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
