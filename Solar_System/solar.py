@@ -71,9 +71,9 @@ class Solar_Ui():
         df = pd.read_sql_query(query, conn)
         dt = int(time.time() * 10 % 60)
         ax.set_title("Photo Power")
-        ax.set_xlabel("t(s)")
+        ax.set_xlabel("t(h)")
         ax.set_ylabel("power(kW)")
-        ax.plot(df["photokW"][0 + dt:60 + dt])
+        ax.plot(df["photokW"][0 + dt:24 + dt])
         plt.savefig(self.path + "pictures/photo_pic1.jpg")
         plt.close()
 
@@ -84,7 +84,7 @@ class Solar_Ui():
         query = "SELECT * FROM dataTable"
         df = pd.read_sql_query(query, conn)
         dt = int(time.time() * 10 % 60)
-        ax.plot(df["sell_price"][0 + dt:60 + dt])
+        ax.plot(df["sell_price"][0 + dt:24 + dt])
         ax.set_xlabel("t(h)")
         ax.set_ylabel("price(CNY)")
         plt.savefig(self.path + "pictures/photo_pic2.jpg")

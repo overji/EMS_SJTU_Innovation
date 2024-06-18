@@ -70,7 +70,7 @@ class Wind_Ui():
         query = "SELECT * FROM dataTable"
         df = pd.read_sql_query(query, conn)
         dt = int(time.time() * 10 % 60)
-        ax.plot(df["windkW"][0 + dt:60 + dt])
+        ax.plot(df["windkW"][0 + dt:24 + dt])
         ax.set_title("Wind Power")
         ax.set_xlabel("t(s)")
         ax.set_ylabel("power(kW)")
@@ -84,7 +84,7 @@ class Wind_Ui():
         query = "SELECT * FROM dataTable"
         df = pd.read_sql_query(query, conn)
         dt = int(time.time() * 10 % 60)
-        ax.plot(df["sell_price"][0 + dt:60 + dt])
+        ax.plot(df["sell_price"][0 + dt:24 + dt])
         ax.set_title("Sell Price")
         ax.set_xlabel("t(s)")
         ax.set_ylabel("price(CNY) ")
