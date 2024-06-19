@@ -1,11 +1,14 @@
 from PyQt5.QtGui import *
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import QDateTime
 import ctypes
+from Main_Page.fetch_weather_info import *
 class main_page_Ui(QWidget):
     path = None
     def __init__(self, relative_path="",Map=(1000,1000)):
         super().__init__()
+
         self.Map = Map
         self.path = relative_path
         self.ui = uic.loadUi(self.path + "MainPage.ui")
@@ -17,8 +20,23 @@ class main_page_Ui(QWidget):
         self.ui.Btn_1.clicked.connect(self.Btn_1_click)
 
         self.myinit()
+        self.updateDate()
+        self.updateWeather()
+
+    def updateDate(self):
+        current_datetime = QDateTime.currentDateTime()
+        date = current_datetime.date()
+        year = date.year()
+        month = date.month()
+        day = date.day()
+        self.ui.label_5.setText(f"{year}/{month}/{day}")
+
+    def updateWeather(self):
+        temperature,wind = get_weather()
+        self.ui.label_7.setText(wind)
+        self.ui.label_9.setText(temperature)
     def Btn_1_click(self):
-        self.ui.label_5.setText("114514")
+        self.ui.label_5.setText(QDateTime.currentDateTime().toString())
         print(114514)
 
     def setstylesheet(self):
