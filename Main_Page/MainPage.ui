@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1097</width>
+    <width>1230</width>
     <height>726</height>
    </rect>
   </property>
@@ -258,7 +258,7 @@ padding:10px;</string>
     <rect>
      <x>590</x>
      <y>10</y>
-     <width>504</width>
+     <width>627</width>
      <height>662</height>
     </rect>
    </property>
@@ -364,7 +364,7 @@ padding:10px;</string>
      </widget>
     </item>
     <item>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
       <item row="0" column="0">
        <widget class="QLabel" name="label_10">
         <property name="styleSheet">
@@ -373,7 +373,7 @@ color:rgb(255, 255, 255);
 padding:10px;</string>
         </property>
         <property name="text">
-         <string>昼电价（10:00-18:00）</string>
+         <string>峰电价</string>
         </property>
        </widget>
       </item>
@@ -385,7 +385,7 @@ color:rgb(255, 255, 255);
 padding:10px;</string>
         </property>
         <property name="text">
-         <string>峰电价/谷电价</string>
+         <string>0.677元/kWh</string>
         </property>
        </widget>
       </item>
@@ -397,7 +397,7 @@ color:rgb(255, 255, 255);
 padding:10px;</string>
         </property>
         <property name="text">
-         <string>夜电价（...）</string>
+         <string>(6:00-22:00)</string>
         </property>
        </widget>
       </item>
@@ -409,7 +409,7 @@ color:rgb(255, 255, 255);
 padding:10px;</string>
         </property>
         <property name="text">
-         <string>xx</string>
+         <string>谷电价</string>
         </property>
        </widget>
       </item>
@@ -421,7 +421,7 @@ color:rgb(255, 255, 255);
 padding:10px;</string>
         </property>
         <property name="text">
-         <string>xxx</string>
+         <string>(22:00-6:00)</string>
         </property>
        </widget>
       </item>
@@ -433,7 +433,7 @@ color:rgb(255, 255, 255);
 padding:10px;</string>
         </property>
         <property name="text">
-         <string>xxx/xxx</string>
+         <string>0.337元/kWh</string>
         </property>
        </widget>
       </item>
