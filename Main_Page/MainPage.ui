@@ -461,7 +461,7 @@ color:rgb(255, 255, 255);
 padding:10px;</string>
         </property>
         <property name="text">
-         <string>这是一个用于占位的Textlabel</string>
+         <string/>
         </property>
        </widget>
       </item>
