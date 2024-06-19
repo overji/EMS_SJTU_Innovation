@@ -101,7 +101,7 @@ class MyWindow(QWidget):
 
         # 页面Widget
         self.win1 = main_page_Ui("Main_Page/",(rr[0]-rr[3],rr[1]))
-        self.win2 = sample_screen("网络界面", "red", 2)
+        self.win2 = sample_screen("网络界面", "red", 4)
         self.win3 = Wind_Ui("Wind_System/")
         self.win4 = Solar_Ui("Solar_System/")
         self.win5 = EV_Ui("EV_System/")
@@ -233,7 +233,7 @@ class MyWindow(QWidget):
         self.timer_btn.clicked.connect(self.timer_start)
 
     def timer_start(self):
-        self.mytimer.start(100)
+        self.mytimer.start(10000)
         self.timer_btn.clicked.disconnect(self.timer_start)
         self.timer_btn.clicked.connect(self.timer_stop)
         self.timer_btn.setText("P")
