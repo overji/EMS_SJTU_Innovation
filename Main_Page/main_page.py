@@ -3,6 +3,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QDateTime
 import ctypes
+import sqlite3
+import pandas as pd
 from Main_Page.fetch_weather_info import *
 class main_page_Ui(QWidget):
     path = None
