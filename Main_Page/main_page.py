@@ -18,6 +18,10 @@ class main_page_Ui(QWidget):
             eval("self.ui.Btn_"+str(i)+".setStyleSheet("+text+")")
 
         self.ui.Btn_1.clicked.connect(self.Btn_1_click)
+        self.ui.Btn_2.clicked.connect(self.Btn_2_click)
+        self.ui.Btn_3.clicked.connect(self.Btn_3_click)
+        self.ui.Btn_4.clicked.connect(self.Btn_4_click)
+        self.ui.Btn_5.clicked.connect(self.Btn_5_click)
 
         self.myinit()
         self.updateDate()
@@ -35,9 +39,46 @@ class main_page_Ui(QWidget):
         temperature,wind = get_weather()
         self.ui.label_7.setText(wind)
         self.ui.label_9.setText(temperature)
+
     def Btn_1_click(self):
-        self.ui.label_5.setText(QDateTime.currentDateTime().toString())
-        print(114514)
+        conn = sqlite3.connect("data/data_db.db")
+        query = "SELECT * FROM dataTable"
+        df = pd.read_sql_query(query, conn)
+        df_EV = df["BatteryChange"]
+        text = "电动汽车充电桩\n运行功率：%.2f" % (df_EV[2]) + " kWh"
+        self.ui.label_16.setText(text)
+
+    def Btn_2_click(self):
+        conn = sqlite3.connect("data/data_db.db")
+        query = "SELECT * FROM dataTable"
+        df = pd.read_sql_query(query, conn)
+        df_WIND = df["windkW"]
+        text = "风机\n运行功率：%.2f" % (df_WIND[1]) + " kWh"
+        self.ui.label_16.setText(text)
+
+    def Btn_3_click(self):
+        conn = sqlite3.connect("data/data_db.db")
+        query = "SELECT * FROM dataTable"
+        df = pd.read_sql_query(query, conn)
+        df_ = df["loadkW"]
+        text = "负荷\n运行功率：%.2f" % (df_[1]) + " kWh"
+        self.ui.label_16.setText(text)
+
+    def Btn_4_click(self):
+        conn = sqlite3.connect("data/data_db.db")
+        query = "SELECT * FROM dataTable"
+        df = pd.read_sql_query(query, conn)
+        df_ = df["BatteryChange"]
+        text = "储能\n运行功率：%.2f" % (df_[6]) + " kWh"
+        self.ui.label_16.setText(text)
+
+    def Btn_5_click(self):
+        conn = sqlite3.connect("data/data_db.db")
+        query = "SELECT * FROM dataTable"
+        df = pd.read_sql_query(query, conn)
+        df_ = df["BatteryChange"]
+        text = "光伏\n运行功率：%.2f" % (df_[3]) + " kWh"
+        self.ui.label_16.setText(text)
 
     def setstylesheet(self):
         standard_font_size = 15
