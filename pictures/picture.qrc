@@ -1,0 +1,26 @@
+<!DOCTYPE RCC>
+<!--
+(每次更改该qrc资源文件时)在该目录下运行`pyrcc5 picture.qrc -o picture_rc.py`可将qrc文件编译为.py文件
+在mainui.py中import这个py文件，即可使用Qt designer中设定的图片
+否则，designer中载入的图片在loadui后运行时无法显示，原因未知
+因为麻烦所以目前没有用这个文件，而是采用了在代码中修改按钮图标的写法，希望能有人改进，从而降低代码和界面的耦合度
+-->
+<RCC version="1.0">
+    <qresource prefix="background">
+        <file>backimage/image1.jpg</file>
+        <file>backimage/image2.jpg</file>
+        <file>backimage/image3.png</file>
+        <file>backimage/image4.png</file>
+    </qresource>
+
+    <qresource prefix="button">
+        <file>button_image/main.png</file>
+        <file>button_image/car.svg</file>
+        <file>button_image/light.svg</file>
+        <file>button_image/blank.png</file>
+        <file>button_image/web.svg</file>
+        <file>button_image/wind.svg</file>
+        <file>button_image/storage.svg</file>
+    </qresource>
+
+</RCC>

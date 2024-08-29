@@ -1,3 +1,6 @@
+"""
+mainui.py用于组织各个子界面
+"""
 import sys
 import time
 import threading
@@ -6,58 +9,37 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
+from PyQt5 import QtWidgets
+from PyQt5 import pyrcc
+from functools import partial
 
-from Storage_System.storage_ui import *
-from Wind_System.wind import *
-from Solar_System.solar import *
-from EV_System.EV_main import *
-from Load_System.load_main import *
-from template_For_Data_Prediction import genetic_alg
-from Main_Page.main_page import *
+from ChildPages import main_page, network, wind, solar, EV_main, storage_ui, load_main
+from APIs import ScreenScale
+
 # 仅供展示时显示界面范围
-image_list = ["image1.jpg",
-              "image1.jpg", "image2.png", "image3.jpg", "image4.png",
-              "image5.png", "image6.jpg", "image7.png", "image8.jpg"]
-
-# 分辨率参数 width,height,左侧宽度，右侧用于减去的宽度（左侧加30，也可以是20或50之类的）
-rr = [1440, 900, 150, 150 + 30]
-conti = True
+# 获取工作区屏幕尺寸，效果同 rect = QDesktopWidget().availableGeometry().getRect()[2:]
+rect = ScreenScale.screenApi().get_working_space_scale()  # 自己写的API，避免`QApplication`未创建时无法使用上面那个方式获取屏幕工作区尺寸
+rr = [rect[0], rect[1], int(rect[0] / 10), int(rect[0] / 10) + 30]
 
 
-# //////////////////////
-# 映射函数，用于展示时缩放图片
-# 短边适应
-def mymap_short(a, b, c, d):
-    x = int(a * max(c / a, d / b))
-    y = int(b * max(c / a, d / b))
-    return (x, y)
-
-
-# 长边适应
-def mymap_long(a, b, c, d):
-    x = int(a * min(c / a, d / b))
-    y = int(b * min(c / a, d / b))
-    return (x, y)
-
-
-# 展示时居中并缩放图片，QImage
-def myIamge(text, x, y):
-    image1 = QImage(text)
-    map = (x, y)
-    # map = mymap_long(image1.width(), image1.height(), x, y)
-    image2 = image1.scaled(map[0], map[1] - 100)
-    # l1 = [(map[0]-x)/2,map[0]-(map[0]-x)/2,(map[1]-y)/2,map[1]-(map[1]-y)/2]
-    # image2 = image2.copy(int(l1[0]),int(l1[2]),x,y)
-    return image2
-
-
-# 一个具体的右侧widget，用于展示
+# 一个用于展示图片的widget类 # fzz并没有修改，因为觉得麻烦
 class sample_screen(QWidget):
     def __init__(self, example_text, color, id):
         super().__init__()
         self.myinit(example_text, color, id)
 
+    # 展示时居中并缩放图片，QImage
+    def myIamge(self, text, x, y):
+        image1 = QImage(text)
+        map = (x, y)
+        image2 = image1.scaled(map[0], map[1] - 100)
+        return image2
+        ############################
+
     def myinit(self, example_text, color, id):
+        image_list = ["image1.jpg",
+                      "image1.jpg", "image2.png", "image3.jpg", "image4.png",
+                      "image5.png", "image6.jpg", "image7.png", "image8.jpg"]
         # 垂直布局
         self.qvb = QVBoxLayout()
 
@@ -73,218 +55,114 @@ class sample_screen(QWidget):
         # 调色板及图片QPalette，QImage，注意，尽量减少在widget类的设置背景中使用在Label中用的setStyleSheet
         # 因为这可能会导致子控件设置背景及颜色困难
         self.pal = QPalette()
-        pal_image = myIamge("pictures/backimage/%s" % image_list[id], rr[0] - rr[3], rr[1])
+        pal_image = self.myIamge("pictures/backimage/%s" % image_list[id], rr[0] - rr[3], rr[1])
         self.pal.setBrush(self.backgroundRole(), QBrush(pal_image))
         self.setPalette(self.pal)
         self.setAutoFillBackground(True)  # 加上这句，要不不知道为啥图片不显示
 
 
-# 退出程序
-def exitwin():
-    sys.exit(0)
+########################################################################################################################
+# 程序主界面
+class MainWindow:
+    def __init__(self):
+        super().__init__()
+        self.ui = self.initMainUi()  # 加载主界面
+        self.winList = self.initWinList()  # 加载各个界面
+        self.timer = self.initTimer()  # 计时器初始化
+        self.initBtn()  # 按钮功能链接
 
+    def initTimer(self):
+        mytimer = QTimer(self.ui)
+        mytimer.timeout.connect(self.winList[2].wind_change_text)
+        mytimer.timeout.connect(self.winList[3].photo_change_text)
+        mytimer.timeout.connect(self.winList[4].EV_timerEvent)
+        mytimer.timeout.connect(self.winList[5].storage_change_text)
+        mytimer.timeout.connect(self.winList[6].Load_timerEvent)
+        return mytimer
 
-class MyWindow(QWidget):
-    def __init__(self, parent=None):
-        self.timer = QTimer()
-        self.timer.start(60000)
-        super().__init__(parent)
-        self.create_stacked_layout()  # 多个页面只展示其中一个
-        self.create_list_layout()  # 按钮用的
-        self.init_ui()
-
-
-
-    # 多页面的视图
-    def create_stacked_layout(self):
-        self.main_screen = QStackedLayout()
-
-        # 页面Widget
-        self.win1 = main_page_Ui("Main_Page/",(rr[0]-rr[3],rr[1]))
-        self.win2 = sample_screen("网络界面", "red", 4)
-        self.win3 = Wind_Ui("Wind_System/")
-        self.win4 = Solar_Ui("Solar_System/")
-        self.win5 = EV_Ui("EV_System/")
-        self.win6 = Storage_Ui("Storage_System/", genetic_alg.GA_run_func)
-        self.win7 = Load_Ui("Load_System/")
-
-        # for i in range (1,8):
-        #     eval("self.main_screen.addWidget(self.win%d.ui)"%i)
-
-        self.main_screen.addWidget(self.win1)
-        self.main_screen.addWidget(self.win2)
-        self.main_screen.addWidget(self.win3.ui)
-        self.main_screen.addWidget(self.win4.ui)
-        self.main_screen.addWidget(self.win5.ui)
-        self.main_screen.addWidget(self.win6.ui)
-        self.main_screen.addWidget(self.win7.ui)
-
-    # 左侧按钮列表视图
-    def create_list_layout(self):
-        self.listbtn = uic.loadUi("mainmenu.ui")
-        self.listbtn.setLayout(self.listbtn.layout1)
-
-        btnpng = ["", "main.png", "web.svg", "wind.svg", "light.svg", "car.svg", "storage.svg", "blank.png"]
-
-        # 左侧btn图片
+    def initBtn(self):
+        # ##################################### 页面切换按钮 #########################################
+        # Btn图片设置
+        btnImage = ["", "main.png", "web.svg", "wind.svg", "light.svg", "car.svg", "storage.svg", "blank.png"]
         for i in range(1, 8):
-            text = "\"border-image:url(./pictures/button_image/%s)\" %\"" + btnpng[i] + "\""
+            text = f"\"border-image:url(./pictures/button_image/%s)\" %\"{btnImage[i]}\""
             # print(text)
-            eval("self.listbtn.Btn" + str(i) + ".setStyleSheet(" + text + ")")
-
-        # 左侧btn大小
+            eval(f"self.ui.Btn{i}.setStyleSheet(" + text + ")")
+        # Btn大小设置
         for i in range(1, 8):
-            eval("self.listbtn.Btn%d.setFixedSize(int(rr[1] / 18), int(rr[1] / 18))" % i)
-
-        # 左侧btn连接
+            # self.listbtn.Btn1.setFixedSize(int(rr[1] / 18), int(rr[1] / 18))
+            eval("self.ui.Btn%d.setFixedSize(int(rr[1] / 18), int(rr[1] / 18))" % i)
+        # Btn功能连接
         for i in range(1, 8):
-            eval("self.listbtn.Btn%d.clicked.connect(self.btn_click%d)" % (i, i))
+            btn = getattr(self.ui, f'Btn{i}')  # 等价于btn = self.ui.Btn{i}
+            # partial这个语法等价于self.ui.stackedWidget.setCurrentIndex(i-1)
+            btn.clicked.connect(partial(self.ui.stackedWidget.setCurrentIndex, i - 1))
 
-        self.listbutton = QHBoxLayout()
-        self.listbutton.addStretch(1)
-        self.listbutton.addWidget(self.listbtn)
-        self.listbutton.addStretch(1)
+        # ########################### 关闭按钮、最小化按钮、测试按钮 #####################################
+        # 关闭程序按钮
+        self.ui.exitBtn.setFixedSize(int(rr[1] / 40), int(rr[1] / 40))
+        self.ui.exitBtn.setStyleSheet("font-size:10pt")
+        self.ui.exitBtn.clicked.connect(lambda: sys.exit(0))
+        # exitbtn.clicked.connect(lambda: self.timer.stop)
 
-    def init_ui(self):
+        # 最小化程序按钮
+        self.ui.minimizeBtn.setFixedSize(int(rr[1] / 40), int(rr[1] / 40))
+        self.ui.minimizeBtn.setStyleSheet("font-size:15pt")
+        self.ui.minimizeBtn.clicked.connect(self.ui.showMinimized)
 
+        # 测试更改数据的按钮
+        self.ui.testBtn.setFixedSize(int(rr[1] / 40), int(rr[1] / 40))
+        self.ui.testBtn.setStyleSheet("font-size:10pt")
+        self.ui.testBtn.clicked.connect(self.timerChange)
+
+    def timerChange(self):
+        if self.timer.isActive():
+            self.timer.stop()
+            self.ui.testBtn.setText("T")
+        else:
+            self.timer.start(1000)
+            self.ui.testBtn.setText("P")
+
+    def initWinList(self):
+        win = [
+            main_page.main_page_Ui("ChildPages/", (rr[0] - rr[3], rr[1])),
+            network.Network_Ui("ChildPages/"),
+            wind.Wind_Ui("ChildPages/"),
+            solar.Solar_Ui("ChildPages/"),
+            EV_main.EV_Ui("ChildPages/"),
+            storage_ui.Storage_Ui("ChildPages/"),
+            load_main.Load_Ui("ChildPages/")
+        ]
+        self.ui.stackedWidget.addWidget(win[0])
+        self.ui.stackedWidget.addWidget(win[1].ui)
+        self.ui.stackedWidget.addWidget(win[2].ui)
+        self.ui.stackedWidget.addWidget(win[3].ui)
+        self.ui.stackedWidget.addWidget(win[4].ui)
+        self.ui.stackedWidget.addWidget(win[5].ui)
+        self.ui.stackedWidget.addWidget(win[6].ui)
+        return win
+
+    def initMainUi(self):
+        # 加载ui文件
+        mainUi = uic.loadUi("mainUi.ui")
         # 设置主界面视图
-        # 注意，这里Fixed，是固定大小
-        # setGoemetry可以设置大小和位置，但是可拖动改变
-        self.setFixedSize(rr[0], rr[1])
-        self.setWindowTitle("风光储充能量管理系统")
-
+        mainUi.setFixedSize(rr[0], rr[1])  # 注意，这里Fixed，是固定大小，setGeometry虽然也可以设置大小和位置，但是可拖动改变
+        mainUi.setWindowTitle("风光储充能量管理系统")
         # 消除边框
-        self.setWindowFlags(
+        mainUi.setWindowFlags(
             Qt.Window
             | Qt.FramelessWindowHint
             | Qt.WindowSystemMenuHint
             | Qt.WindowMinimizeButtonHint
             | Qt.WindowMaximizeButtonHint
         )
+        return mainUi
 
-        # 总体上是水平视图，左侧按钮，右边页面
-        container = QHBoxLayout()
-
-        # 创建widget放按钮列表视图
-        list_widget = QWidget()
-        list_widget.setFixedSize(rr[2], rr[1])
-        list_widget.setLayout(self.listbutton)
-
-        # 创建widget放置多页面视图
-        main_widget = QWidget()
-        main_widget.setLayout(self.main_screen)
-        main_widget.setFixedSize(rr[0] - rr[3], rr[1] - int(rr[1] / 20))
-
-        # 水平视图（container）放置这两个widget
-        container.addWidget(list_widget)
-        container.addWidget(main_widget)
-
-        # 将container应用于主widget
-        self.setLayout(container)
-
-        # 设置主widget底色 （#66ccff）,注意用QPalette，要不按钮和其他控件颜色可能会出问题
-        pal = QPalette()
-
-        lg = QRadialGradient(rr[0] // 2, rr[1] // 2, int(rr[1] / 1.5), rr[0] // 2, rr[1] // 2)
-        lg.setSpread(QRadialGradient.PadSpread)
-        lg.setColorAt(0.153409, QColor(39, 98, 216, 255))
-        lg.setColorAt(0.8, QColor(16, 16, 181, 255))
-
-        # stop:0.1875 rgba(27, 91, 220, 255), stop:0.607955 rgba(, 255))
-        # pal.setBrush(self.backgroundRole(),QColor(16, 16, 181))
-        mybrush = QBrush(lg)
-        pal.setBrush(self.backgroundRole(), mybrush)
-        self.setPalette(pal)
-
-        # 一个退出程序按钮
-        exitbtn = QPushButton("X", self)
-        exitbtn.setGeometry(rr[0] - int(rr[1] / 40), 0, int(rr[1] / 40), int(rr[1] / 40))
-        exitbtn.setStyleSheet("font-size:10pt")
-        exitbtn.clicked.connect(exitwin)
-        exitbtn.clicked.connect(lambda:self.timer.stop)
-
-        # Minimized
-        Miniwin_btn = QPushButton("-", self);
-        Miniwin_btn.setGeometry(rr[0] - int(rr[1] / 40) - int(rr[1] / 50 * 1.2), 0, int(rr[1] / 40), int(rr[1] / 40))
-        Miniwin_btn.setStyleSheet("font-size:15pt")
-        Miniwin_btn.clicked.connect(self.showMinimized)
-        # 一个测试更改数据的按钮
-        text_change_btn = QPushButton("C", self)
-        text_change_btn.setGeometry(int(rr[1] / 50 * 1.2) * 2, 0, int(rr[1] / 40), int(rr[1] / 40))
-        text_change_btn.setStyleSheet("font-size:10pt")
-        text_change_btn.clicked.connect(self.win6.storage_change_text)
-        text_change_btn.clicked.connect(self.win3.wind_change_text)
-        text_change_btn.clicked.connect(self.win4.photo_change_text)
-        text_change_btn.clicked.connect(self.win5.EV_timerEvent)
-        text_change_btn.clicked.connect(self.win7.Load_timerEvent)
-        # text_change_btn.clicked.connect(self.win6.storage_change_text) 添加你的函数
-
-        # mytimer
-        self.mytimer = QTimer(self)
-        self.mytimer.timeout.connect(self.win6.storage_change_text)
-        self.mytimer.timeout.connect(self.win3.wind_change_text)
-        self.mytimer.timeout.connect(self.win4.photo_change_text)
-        self.mytimer.timeout.connect(self.win5.EV_timerEvent)
-        self.mytimer.timeout.connect(self.win7.Load_timerEvent)
-        # 一个用于测试QTimer的按钮
-        self.timer_btn = QPushButton("T", self)
-        self.timer_btn.setGeometry(int(rr[1] / 50 * 1.2) * 3, 0, int(rr[1] / 40), int(rr[1] / 40))
-        self.timer_btn.setStyleSheet("font-size:10pt")
-        self.timer_btn.clicked.connect(self.timer_start)
-
-    def timer_start(self):
-        self.mytimer.start(10000)
-        self.timer_btn.clicked.disconnect(self.timer_start)
-        self.timer_btn.clicked.connect(self.timer_stop)
-        self.timer_btn.setText("P")
-
-    def timer_stop(self):
-        self.mytimer.stop()
-        self.timer_btn.clicked.disconnect(self.timer_stop)
-        self.timer_btn.clicked.connect(self.timer_start)
-        self.timer_btn.setText("T")
-
-    # 以下均为按钮触发事件,用于页面切换
-    # 页面的编号是按照添加顺序的前后去定的
-    def btn_click1(self):
-        self.main_screen.setCurrentIndex(0)
-
-    def btn_click2(self):
-        self.main_screen.setCurrentIndex(1)
-
-    def btn_click3(self):
-        self.main_screen.setCurrentIndex(2)
-
-    def btn_click4(self):
-        self.main_screen.setCurrentIndex(3)
-
-    def btn_click5(self):
-        self.main_screen.setCurrentIndex(4)
-
-    def btn_click6(self):
-        self.main_screen.setCurrentIndex(5)
-
-    def btn_click7(self):
-        self.main_screen.setCurrentIndex(6)
-
-def runGA():
-    while True:
-        genetic_alg.GA_run_func()
-        time.sleep(6000)
 
 if __name__ == '__main__':
-    thread = threading.Thread(target=runGA)
-    thread.daemon = True
-    thread.start()
     app = QApplication(sys.argv)
-    rect = QDesktopWidget().availableGeometry().getRect()
-    print(rect)
-    genetic_alg.get_path("template_For_Data_Prediction/")
-    rr[0] = rect[2]
-    rr[1] = rect[3]
-    rr[2] = int(rr[0] / 10)
-    rr[3] = rr[2] + 30
+    # genetic_alg.get_path("template_For_Data_Prediction/")
     # 创建自定义窗口
-    w = MyWindow()
-    w.show()
+    w = MainWindow()
+    w.ui.show()
     app.exec_()
