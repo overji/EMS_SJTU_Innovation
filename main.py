@@ -1,35 +1,52 @@
 from mainui import *
 from SignUp.mainlog import *
-from data_input import *
+from APIs import genetic_alg
 
+
+# 多线程任务
+def runGA():
+    """多线程任务"""
+    while True:
+        # 调用遗传算法api进行计算
+        genetic_alg.GA_run_func()
+        time.sleep(6000)
+
+
+# 登录判定，及成功登录触发事件
+def signIn(isControllerMode):
+    """登录判定，及成功登录触发事件"""
+    if isControllerMode or mainlogUi.signInTest():  # 若调用时传入1，则跳过登录界面，直接进入主界面
+        # 切换到主界面
+        mainlogUi.mainUi.close()
+        mainWindow.ui.show()
+
+        # 多线程任务
+        thread = threading.Thread(target=runGA)
+        thread.daemon = True
+        thread.start()
+
+
+# 用于组织页面顶层逻辑
 if __name__ == '__main__':
-    # 这里更新了数据库里面的数据
-    update_data()
-
+    # 开始程序
     app = QApplication(sys.argv)
 
-    main, wangjimima, register = log_init("SignUp/")
-    main.pushButton.clicked.connect(main.cutt)
-    main.pushButton_2.clicked.connect(wangjimima.Open3)
-    main.pushButton_3.clicked.connect(register.Open2)
+    # 登录界面
+    mainlogUi = MainLogUi("SignUp/")
 
-    wangjimima.pushButton_2.clicked.connect(main.Open)
-    wangjimima.pushButton.clicked.connect(wangjimima.ct)
+    # 程序主界面
+    mainWindow = MainWindow()
 
-    register.pushButton.clicked.connect(register.cut)
-    register.pushButton_2.clicked.connect(main.Open)
+    # 登录按钮连接到登录判定
+    mainlogUi.mainUi.pushButton.clicked.connect(lambda: signIn(0))
 
-    main.show()
+    # 打开登录界面
+    mainlogUi.mainUi.show()
 
-    rect = QDesktopWidget().availableGeometry().getRect()
-    print(rect)
-    rr[0] = rect[2]
-    rr[1] = rect[3]
-    rr[2] = int(rr[0] / 10)
-    rr[3] = rr[2] + 30
-    main.setFixedSize(int(rr[0] / 2), int(rr[1] / 2))
-    # 创建自定义窗口
-    w = MyWindow()
-    main.getappfunc(w.show)
+    # ###################### 跳过登录，直接在主界面调试时使用 ####################################
+    # signIn(1)
+    # ######################################################################################
 
-    sys.exit(app.exec_())
+    # 程序运行
+    appexec = app.exec_()
+    sys.exit(appexec)

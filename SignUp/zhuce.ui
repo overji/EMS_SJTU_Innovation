@@ -9,15 +9,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>790</width>
-    <height>652</height>
+    <width>657</width>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>注册界面</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.431, fx:0.5, fy:0.5, stop:0.153409 rgba(39, 98, 216, 255), stop:1 rgba(16, 16, 181, 255));\npadding:10px;</string>
+   <string notr="true">background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.431, fx:0.5, fy:0.5, stop:0.153409 rgba(39, 98, 216, 255), stop:1 rgba(16, 16, 181, 255));
+padding:10px;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
