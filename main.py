@@ -13,17 +13,17 @@ def runGA():
 
 
 # 登录判定，及成功登录触发事件
-def signIn(isControllerMode):
+def signIn(isDeveloperMode):
     """登录判定，及成功登录触发事件"""
-    if isControllerMode or mainlogUi.signInTest():  # 若调用时传入1，则跳过登录界面，直接进入主界面
+    if isDeveloperMode or mainlogUi.signInTest():  # 若调用时传入1，则跳过登录界面，直接进入主界面
         # 切换到主界面
         mainlogUi.mainUi.close()
         mainWindow.ui.show()
 
         # 多线程任务
-        thread = threading.Thread(target=runGA)
-        thread.daemon = True
-        thread.start()
+        # thread = threading.Thread(target=runGA)
+        # thread.daemon = True
+        # thread.start()
 
 
 # 用于组织页面顶层逻辑
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     mainlogUi.mainUi.show()
 
     # ###################### 跳过登录，直接在主界面调试时使用 ####################################
-    # signIn(1)
+    signIn(isDeveloperMode=1)
     # ######################################################################################
 
     # 程序运行

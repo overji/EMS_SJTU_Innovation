@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1036</width>
+    <height>985</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:qradialgradient(
+spread:pad, cx:0.5, cy:0.5, 
+radius:0.431, fx:0.5, fy:0.5, 
+stop:0.153409 rgba(39, 98, 216, 255), 
+stop:1 rgba(16, 16, 181, 255)
+);
+padding:10px;
+font: 20pt &quot;Microsoft YaHei&quot;;
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QLabel" name="title_lb">
+     <property name="styleSheet">
+      <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+
+/*padding-left:40%;*/</string>
+     </property>
+     <property name="text">
+      <string>负荷系统</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10">
+       <item>
+        <widget class="QLabel" name="ns_hd_lb">
+         <property name="styleSheet">
+          <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+
+;
+/*padding-left:40%;*/</string>
+         </property>
+         <property name="text">
+          <string>实时负荷数据</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0" columnstretch="2,3,1">
+         <property name="horizontalSpacing">
+          <number>10</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>15</number>
+         </property>
+         <item row="2" column="0">
+          <widget class="QLabel" name="ld_lb_hd_3">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>无功功率:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="ld_lb_unit_1">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>kW</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="ld_lb_hd_4">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>功率因数:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="ld_lb_hd_6">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>电流:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="ld_lb_hd_1">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>实时功率:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="ld_lb_hd_5">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>电压:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="ld_lb_dt_1">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 255, 255);
+border-width:0.5px;
+border-style:solid;
+border-color:rgb(0, 0, 190);
+background-color:rgb(0, 0, 109);</string>
+           </property>
+           <property name="text">
+            <string>1145</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="ld_lb_hd_2">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>有功功率:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="ld_lb_hd_7">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>温度:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="ld_lb_dt_2">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 255, 255);
+border-width:0.5px;
+border-style:solid;
+border-color:rgb(0, 0, 190);
+background-color:rgb(0, 0, 109);</string>
+           </property>
+           <property name="text">
+            <string>1145</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="ld_lb_dt_3">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 255, 255);
+border-width:0.5px;
+border-style:solid;
+border-color:rgb(0, 0, 190);
+background-color:rgb(0, 0, 109);</string>
+           </property>
+           <property name="text">
+            <string>1145</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="ld_lb_dt_4">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 255, 255);
+border-width:0.5px;
+border-style:solid;
+border-color:rgb(0, 0, 190);
+background-color:rgb(0, 0, 109);</string>
+           </property>
+           <property name="text">
+            <string>1145</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLabel" name="ld_lb_dt_5">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 255, 255);
+border-width:0.5px;
+border-style:solid;
+border-color:rgb(0, 0, 190);
+background-color:rgb(0, 0, 109);</string>
+           </property>
+           <property name="text">
+            <string>1145</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLabel" name="ld_lb_dt_6">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 255, 255);
+border-width:0.5px;
+border-style:solid;
+border-color:rgb(0, 0, 190);
+background-color:rgb(0, 0, 109);</string>
+           </property>
+           <property name="text">
+            <string>1145</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QLabel" name="ld_lb_dt_7">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 255, 255);
+border-width:0.5px;
+border-style:solid;
+border-color:rgb(0, 0, 190);
+background-color:rgb(0, 0, 109);</string>
+           </property>
+           <property name="text">
+            <string>1145</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="ld_lb_unit_2">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>kW</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QLabel" name="ld_lb_unit_3">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>kW</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLabel" name="ld_lb_unit_4">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLabel" name="ld_lb_unit_5">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>V</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QLabel" name="ld_lb_unit_6">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>A</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="2">
+          <widget class="QLabel" name="ld_lb_unit_7">
+           <property name="styleSheet">
+            <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+/*padding-left:40%;*/</string>
+           </property>
+           <property name="text">
+            <string>℃</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,1,1,6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="pw_fg">
+         <property name="styleSheet">
+          <string notr="true">background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(0, 170, 255), stop:1 rgb(0, 0, 255))</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="fg_hd_lb">
+         <property name="styleSheet">
+          <string notr="true">background-color:rgba(0,0,0,0);
+color:white;
+
+/*padding-left:40%;*/</string>
+         </property>
+         <property name="text">
+          <string>负荷情况曲线图</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(0, 0, 223);
+color:white;
+
+/*padding-left:40%;*/</string>
+         </property>
+         <property name="text">
+          <string>调控按钮</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="set_btn_1">
+           <property name="styleSheet">
+            <string notr="true">color:white;
+
+background-color:qradialgradient(
+spread:pad, cx:0.5, cy:0.5, 
+radius:0.431, fx:0.5, fy:0.5, 
+stop:0.153409 rgba(39, 98, 216, 255), 
+stop:1 rgba(16, 16, 181, 255)
+);
+/*padding:10px;*/</string>
+           </property>
+           <property name="text">
+            <string>更新数据</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="set_btn_2">
+           <property name="styleSheet">
+            <string notr="true">color:white;
+
+background-color:qradialgradient(
+spread:pad, cx:0.5, cy:0.5, 
+radius:0.431, fx:0.5, fy:0.5, 
+stop:0.153409 rgba(39, 98, 216, 255), 
+stop:1 rgba(16, 16, 181, 255)
+);
+/*padding:10px;*/</string>
+           </property>
+           <property name="text">
+            <string>更新曲线</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="set_btn_3">
+           <property name="styleSheet">
+            <string notr="true">color:white;
+
+background-color:qradialgradient(
+spread:pad, cx:0.5, cy:0.5, 
+radius:0.431, fx:0.5, fy:0.5, 
+stop:0.153409 rgba(39, 98, 216, 255), 
+stop:1 rgba(16, 16, 181, 255)
+);
+/*padding:10px;*/</string>
+           </property>
+           <property name="text">
+            <string>发送控制指令</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
