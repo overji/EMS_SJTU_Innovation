@@ -17,9 +17,10 @@
 - pictures：存放图片
     - backimage:背景图片
     - button_image：按钮图片
+    - Figures：绘图接口生成的图片
 - ChildPages：
     - `xxx.py`，`xxx.ui`：七个子页面的ui文件及py接口
-    - pictures: 存放图片
+    - ChildPageBase.py: 所有子页面接口类的基类
     - *此外还有一个`__init__.py`文件，用于标识该目录是一个包*
 - SignUp:
     - `mainlog.py`：登录界面程序接口
@@ -52,8 +53,8 @@
 
 - 编程规范
     1. 路径引用：统一使用以Project为根目录的相对路径。如引用数据库时使用路径`data/data_db.db`。
-    2. 类的__init__()方法中，统一传入一个参数`relative_path=None`用于设定类的成员变量`path`
-       ，并在类的其他方法中使用`self.path + "路径/路径"`来引用自身所在路径。（自己测试的时候）
+    2. 类的__init__()方法中，统一传入一个参数`relative_path=None`用于设定类的成员变量`relative_path`
+       ，并在类的其他方法中使用`self.relative_path + "路径/路径"`来引用自身所在路径。（自己测试的时候）<!--但是貌似已经不好用了-->
 - 字体大小规范：未指定（这也是问题所在喵）
   <br>
 
