@@ -89,6 +89,7 @@ $grid_P$
 + 用户: EMS
 + 数据库名称: ems
 + 数据库所用的表: EMS_Data
++ 密码:282432
 
 ### 3.2 常用语句:
 连接数据库:`engine = create_engine('mysql+mysqlconnector://EMS:282432@112.124.43.86/ems')`  
