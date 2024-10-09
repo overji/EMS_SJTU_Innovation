@@ -2,12 +2,14 @@ import random
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5 import uic
+
 import time
 import pandas as pd
 import sqlite3
 import matplotlib.pyplot as plt
 import ctypes
+
+from sqlalchemy import create_engine
 
 from .ChildPageBase import ChildPage
 from APIs.FigureDraw import FigureDraw
@@ -31,9 +33,10 @@ class Solar_Ui(ChildPage):
 
     def update_label_data(self):
         # 从数据库里面读取数据，并且写入Label中
-        conn = sqlite3.connect("data/data_db.db")
-        query = "SELECT * FROM dataTable"
-        df = pd.read_sql_query(query, conn)
+        engine = create_engine('mysql+mysqlconnector://EMS:282432@112.124.43.86/ems')
+
+        query = "SELECT * FROM EMS_Data"
+        df = pd.read_sql(query, engine)
         data_column = df["time"]
         photokW = df["photokW"]
         self.ui.data5.setText(f"{photokW[int(time.time() * 10) % 60]}")

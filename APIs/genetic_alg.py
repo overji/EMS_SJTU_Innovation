@@ -1,8 +1,10 @@
+import os
 import sqlite3
 import time
 import numpy as np
 import pandas as pd
 import matplotlib as plt
+import mysql.connector
 
 raletive_paths = "APIs\\"
 
@@ -109,11 +111,13 @@ class EMS_data:
         return 0
 
     def data_init(self):
-        # print(self.path + "GA_data\\load.txt")
-        self.Load = pd.read_csv(self.path + "GA_data\\load.txt", delimiter="\t", header=None)  # Load是负荷
-        self.PV = pd.read_csv(self.path + "GA_data\\PV.txt", delimiter="\t", header=None)  # PV是光伏发电
-        self.WT = pd.read_csv(self.path + "GA_data\\WT.txt", delimiter="\t", header=None)  # WT是风力发电
-        self.price = pd.read_csv(self.path + "GA_data\\电价.txt", delimiter="\t", header=None)  # price就是电价
+        if(os.path.basename(os.getcwd()) == "APIs"):
+            self.path =  ""
+        print(self.path + "GA_data/load.txt")
+        self.Load = pd.read_csv(self.path + "GA_data/load.txt", delimiter="\t", header=None)  # Load是负荷
+        self.PV = pd.read_csv(self.path + "GA_data/PV.txt", delimiter="\t", header=None)  # PV是光伏发电
+        self.WT = pd.read_csv(self.path + "GA_data/WT.txt", delimiter="\t", header=None)  # WT是风力发电
+        self.price = pd.read_csv(self.path + "GA_data/电价.txt", delimiter="\t", header=None)  # price就是电价
         self.grid_P = pd.Series([0.0] * 24)  # 24小时电网交互功率
         self.grid_C = pd.Series([0.0] * 24)  # 电网交互费用
         self.bat_E = pd.Series([0.0] * 24)  # 蓄电池电量
@@ -153,7 +157,7 @@ def GA_run_func(path=None):
     print("data processing...")
     cross_rate = 0.8
     mutation_rate = 0.001
-    MAXGEN = 75
+    MAXGEN = 20
     pop_size = 100
     chromosome_size = 48 * 14  # 10位整数位 4位小数位
     population = EMS_data(pop_size, chromosome_size, path)
@@ -181,19 +185,31 @@ def GA_run_func(path=None):
             database_input(final, "BatteryChange")
             database_input(x_array, "x_values")
             return final
-        time.sleep(1)
+        time.sleep(0.1)
 
-
-def database_input(arr: np.ndarray, str):
+def database_input(arr: np.ndarray, column_name: str):
+    print (arr)
     print("data processing...")
-    conn = sqlite3.connect('data/data_db.db')
+    conn = mysql.connector.connect(
+        host='112.124.43.86',
+        user='EMS',
+        passwd='282432',
+        database='ems'
+    )
     c = conn.cursor()
-    c.execute("PRAGMA table_info(dataTable)")
-    columns = [column[1] for column in c.fetchall()]
-    if str not in columns:
-        c.execute(f"ALTER TABLE dataTable ADD COLUMN {str} REAL")
+
+    # Get the column names from the EMS_Data table
+    c.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'EMS_Data'")
+    columns = [column[0] for column in c.fetchall()]
+
+    # Add the new column if it does not exist
+    if column_name not in columns:
+        c.execute(f"ALTER TABLE EMS_Data ADD COLUMN {column_name} REAL")
+
+    # Update the table with the new data
     for i, value in enumerate(arr):
-        c.execute(f"UPDATE dataTable SET {str} = {value} WHERE rowid = {i + 1}")
+        c.execute(f"UPDATE EMS_Data SET {column_name} = {value} WHERE time = {i + 1}")
+
     conn.commit()
     conn.close()
     print("储能数据发送到数据库！")

@@ -4,6 +4,8 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import sqlite3
 
+from sqlalchemy import create_engine
+
 
 # fzz吐槽：从设计模式上来讲这里最规范的写法应该是每多一种绘图格式or风格就新建一个子类继承自FigureDraw基类；但是fzz太懒了
 # 于是这里每多一个绘图格式就需要同时建立两个函数，一个作为plot_func用于设计绘图格式，一个用作api接口
@@ -17,8 +19,7 @@ class FigureDraw:
     """
 
     def __init__(self, db_path="data/data_db.db"):
-        self.db_path = db_path
-
+            self.db = db_path
     def __fetch_and_prepare_data(self, col_name, data_range, isNormalized):
         """
         从数据库中获取指定列的数据，并根据范围进行切片和归一化处理。
@@ -32,9 +33,9 @@ class FigureDraw:
         - 处理后的 pandas.Series 对象。
         """
         # 连接数据库
-        conn = sqlite3.connect(self.db_path)
+        conn = create_engine('mysql+mysqlconnector://EMS:282432@112.124.43.86/ems')
         # 查询数据
-        query = f"SELECT {col_name} FROM dataTable"
+        query = f"SELECT {col_name} FROM EMS_Data"
         df = pd.read_sql_query(query, conn)[col_name]
         # 设定数据范围
         df = df[data_range[0]:data_range[1]]

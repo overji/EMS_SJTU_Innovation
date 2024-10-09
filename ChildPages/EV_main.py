@@ -18,6 +18,7 @@ import pandas as pd
 import sqlite3
 import ctypes
 from matplotlib import pyplot as plt
+from sqlalchemy import create_engine
 
 from .ChildPageBase import ChildPage
 from APIs.FigureDraw import FigureDraw
@@ -38,9 +39,11 @@ class EV_Ui(ChildPage):
     def EV_data_update(self):
         """更新数据显示"""
         # 读取数据库对象，为df
-        conn = sqlite3.connect("data/data_db.db")
-        query = "SELECT * FROM dataTable"
-        df = pd.read_sql_query(query, conn)
+        engine = create_engine('mysql+mysqlconnector://EMS:282432@112.124.43.86/ems')
+
+        query = "SELECT * FROM EMS_Data"
+        df = pd.read_sql(query, engine)
+        df = pd.read_sql(query, engine)
         # 获取df的各列数据
         df_time = df["time"]
         windkW = df["windkW"]

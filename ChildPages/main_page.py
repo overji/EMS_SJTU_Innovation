@@ -7,6 +7,8 @@ from PyQt5.QtCore import QDateTime
 import ctypes
 import sqlite3
 import pandas as pd
+from sqlalchemy import create_engine
+
 from APIs.fetch_weather_info import get_weather
 from .ChildPageBase import ChildPage
 
@@ -44,9 +46,10 @@ class MainPage(ChildPage):
         self.ui.Btn_5.clicked.connect(lambda: self.btnClicked("BatteryChange", "光伏"))
 
     def btnClicked(self, col_of_db="", title=""):
-        conn = sqlite3.connect("data/data_db.db")
-        query = "SELECT * FROM dataTable"
-        df = pd.read_sql_query(query, conn)
+        engine = create_engine('mysql+mysqlconnector://EMS:282432@112.124.43.86/ems')
+
+        query = "SELECT * FROM EMS_Data"
+        df = pd.read_sql(query, engine)
         df_col = df[col_of_db]
         text = title + "\n运行功率：%.2f" % (df_col[random.randint(0, 9)]) + " kWh"  # random只是为了看起来随机一点实际上没有任何作用
         self.ui.label_16.setText(text)

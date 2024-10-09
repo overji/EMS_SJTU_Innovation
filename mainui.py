@@ -8,8 +8,7 @@ import threading
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5 import uic
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, uic
 from PyQt5 import pyrcc
 from functools import partial
 
