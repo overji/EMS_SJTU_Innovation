@@ -77,7 +77,7 @@ class MainWindow:
             self.timer.stop()
             self.ui.testBtn.setText("T")
         else:
-            self.timer.start(1000)
+            self.timer.start(5000)
             self.ui.testBtn.setText("P")
 
     def initWinList(self):

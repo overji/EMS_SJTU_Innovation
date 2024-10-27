@@ -1,15 +1,5 @@
 from mainui import *
 from SignUp.mainlog import *
-from APIs import genetic_alg
-
-
-# 多线程任务
-def runGA():
-    """多线程任务"""
-    while True:
-        # 调用遗传算法api进行计算
-        genetic_alg.GA_run_func()
-        time.sleep(6000)
 
 
 # 登录判定，及成功登录触发事件
