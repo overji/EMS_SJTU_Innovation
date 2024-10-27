@@ -1,32 +1,24 @@
 import os
-import sqlite3
 import time
+from datetime import datetime
+
 import numpy as np
 import pandas as pd
-import matplotlib as plt
 import mysql.connector
-
-raletive_paths = "APIs\\"
-
-
-def set_relative_path(path):
-    global raletive_paths
-    raletive_paths = path
 
 
 class EMS_data:
     path = None
 
-    def __init__(self, pop_size, chromosome_size, raletive_path=None):
-        global raletive_paths
-        # path = raletive_path
-        self.path = raletive_paths
+    def __init__(self, pop_size, chromosome_size):
+        self.path = os.path.dirname(__file__)
         # 初始化种群，需要输入种群大小pop_size和染色体大小chromosome_size
         self.pop_size = pop_size
         self.chromosome_size = chromosome_size
         self.population = np.round(np.random.rand(pop_size, chromosome_size)).astype(int)
         self.fit_value = np.zeros((pop_size, 1))
         self.data_init()
+
 
     def select_chromosome(self):
         # 进行自然选择，现在是fit_value争取最小
@@ -111,13 +103,11 @@ class EMS_data:
         return 0
 
     def data_init(self):
-        if(os.path.basename(os.getcwd()) == "APIs"):
-            self.path =  ""
-        print(self.path + "GA_data/load.txt")
-        self.Load = pd.read_csv(self.path + "GA_data/load.txt", delimiter="\t", header=None)  # Load是负荷
-        self.PV = pd.read_csv(self.path + "GA_data/PV.txt", delimiter="\t", header=None)  # PV是光伏发电
-        self.WT = pd.read_csv(self.path + "GA_data/WT.txt", delimiter="\t", header=None)  # WT是风力发电
-        self.price = pd.read_csv(self.path + "GA_data/电价.txt", delimiter="\t", header=None)  # price就是电价
+        log_info("运行在" + self.path + "/GA_data/load.txt")
+        self.Load = pd.read_csv(self.path + "/GA_data/load.txt", delimiter="\t", header=None)  # Load是负荷
+        self.PV = pd.read_csv(self.path + "/GA_data/PV.txt", delimiter="\t", header=None)  # PV是光伏发电
+        self.WT = pd.read_csv(self.path + "/GA_data/WT.txt", delimiter="\t", header=None)  # WT是风力发电
+        self.price = pd.read_csv(self.path + "/GA_data/电价.txt", delimiter="\t", header=None)  # price就是电价
         self.grid_P = pd.Series([0.0] * 24)  # 24小时电网交互功率
         self.grid_C = pd.Series([0.0] * 24)  # 电网交互费用
         self.bat_E = pd.Series([0.0] * 24)  # 蓄电池电量
@@ -154,13 +144,13 @@ class EMS_data:
 
 
 def GA_run_func(path=None):
-    print("data processing...")
+    log_info("data processing...")
     cross_rate = 0.8
     mutation_rate = 0.001
-    MAXGEN = 20
+    MAXGEN = 100
     pop_size = 100
     chromosome_size = 48 * 14  # 10位整数位 4位小数位
-    population = EMS_data(pop_size, chromosome_size, path)
+    population = EMS_data(pop_size, chromosome_size)
     x_array: np.ndarray = np.zeros(MAXGEN)
     ever_best_individiual, ever_best_fit = population.best()
 
@@ -178,18 +168,19 @@ def GA_run_func(path=None):
         best_individual = np.expand_dims(best_individual, 0)
         x = population.binary2decimal(best_individual)
         x_array[i] = population.function(x)
-        print(f"现在的大小是{x_array[i]}")
+        if i % 10 == 0:
+            log_info(f"现在的大小是{x_array[i]}")
+
         if (i == MAXGEN - 1):
             final = population.binary2decimal(ever_best_individiual)
-            print(f"本轮运算完成，最终的结果是{final}，它的计算值是{population.function(final)}")
+            log_info(f"本轮运算完成，最终的结果是{final}，它的计算值是{population.function(final)}")
             database_input(final, "BatteryChange")
             database_input(x_array, "x_values")
             return final
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 def database_input(arr: np.ndarray, column_name: str):
-    print (arr)
-    print("data processing...")
+    log_info(f"{column_name} data uploading...")
     conn = mysql.connector.connect(
         host='112.124.43.86',
         user='EMS',
@@ -212,8 +203,35 @@ def database_input(arr: np.ndarray, column_name: str):
 
     conn.commit()
     conn.close()
-    print("储能数据发送到数据库！")
+    log_info("储能数据发送到数据库！")
+
+def log_info(info_message:str,type=0):
+    ##type:0为正常信息，1为报错信息
+    now = datetime.now()
+    cur_date = now.strftime("%Y-%m-%d")
+    cur_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    file_name = f"logs/{cur_date}_log.log"
+    if type == 0:
+        info_message = cur_time + " | [INFO] | " + info_message
+    elif type == 1:
+        info_message = cur_time + " | [ERROR] | " + info_message
+
+    print(info_message)
+
+    if not os.path.exists("logs"):
+        os.mkdir("logs")
+    if not os.path.exists(file_name):
+        with open(file_name, 'w',encoding='utf-8') as f:
+            f.write(info_message + "\n")
+            f.close()
+    else:
+        with open(file_name,'a',encoding='utf-8') as f:
+            f.write(info_message + "\n")
+            f.close()
+
 
 
 if __name__ == "__main__":
-    GA_run_func()
+    while(True):
+        GA_run_func()
+        time.sleep(10)
