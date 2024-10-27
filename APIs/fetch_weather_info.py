@@ -1,15 +1,18 @@
 import requests
-from lxml import etree
+from bs4 import BeautifulSoup
+import lxml
 
 
 def get_weather():
-    return "",""
-    url = "https://www.tianqishi.com/shanghai.html"
+    url = "https://www.tianqi.com/shanghai/"
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3', }
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0',
+    }
     response = requests.get(url, headers=headers)
-    tree = etree.HTML(response.text)
-    outside_temperature = tree.xpath('//div[@class="ltlTemperature"]//b')[0].text
-    datas = tree.xpath('//ul[@class="mt"]//li')
-    values = tree.xpath('//ul[@class="mt"]//li//span')
-    return outside_temperature,values[2].text
+    soup = BeautifulSoup(response.text,'lxml')
+    now_temp = soup.find_all(class_="now")
+    temperature:str = now_temp[0].b.string + now_temp[0].i.string
+
+    class_shidu = soup.find_all(class_="shidu")
+    wind:str = class_shidu[0].find_all('b')[1].string[3:]
+    return temperature,wind
